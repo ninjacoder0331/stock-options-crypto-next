@@ -16,16 +16,11 @@ export const NAV_DATA = [
         icon: Icons.PieChart,
         items: [],
       },
+      
       {
         title: "Transaction History",
         url: "/transactions",
         icon: Icons.Table,
-        items: [],
-      },
-      {
-        title: "Options Trading",
-        url: "/options",
-        icon: Icons.FourCircle,
         items: [],
       },
       {
@@ -40,6 +35,13 @@ export const NAV_DATA = [
         icon: Icons.Table,
         items: [],
       },
+      {
+        title: "Options Trading",
+        url: "/options",
+        icon: Icons.FourCircle,
+        items: [],
+      },
+      
     ],
   },
 ];

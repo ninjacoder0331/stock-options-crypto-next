@@ -126,172 +126,172 @@ const Overview = () => {
             </p>
           </div>
         </div>
-        <div>
+        <div className="">
               
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-4 p-4'>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-4 pb-4'>
 
-          {/* <div>
-            <TotalView />
-          </div> */}
-          {/* Profit/Loss Card */}
-          <div className='flex flex-col gap-4 rounded-sm border border-stroke bg-white p-5 shadow-default shadow-1 dark:bg-gray-dark dark:shadow-card'>
-            {/* Chart */}
-            <div className='flex-grow'>
-              <ProfitLoss/>
-            </div>
-            
-            {/* P/L Stats */}
-            <div className='flex flex-col gap-2'>
-              <div className='flex items-center gap-3'>
-                {/* Icon Circle */}
-                
-                <div className='flex h-11.5 w-11.5 items-center justify-center rounded-full bg-[#F7931A] bg-opacity-10'>
-                  <span className='text-xl text-[#F7931A]'>$</span>
-                </div>
-                
-                {/* Amount */}
-                <div className='flex flex-col gap-2'>
-                <span className='text-sm font-medium text-gray-5 dark:text-gray-4'>
-                  Total Profit/Loss
-                </span>
-                  <span className='text-2xl font-bold text-black dark:text-white'>
-                    ${formatNumber(portfolioHistory?.equity[portfolioHistory?.equity.length - 1] - portfolioHistory?.base_value)}
+            {/* <div>
+              <TotalView />
+            </div> */}
+            {/* Profit/Loss Card */}
+            <div className='flex flex-col gap-4 rounded-sm  border-stroke bg-white p-5 shadow-default shadow-1 dark:bg-gray-dark dark:shadow-card'>
+              {/* Chart */}
+              <div className='flex-grow'>
+                <ProfitLoss/>
+              </div>
+              
+              {/* P/L Stats */}
+              <div className='flex flex-col gap-2'>
+                <div className='flex items-center gap-3'>
+                  {/* Icon Circle */}
+                  
+                  <div className='flex h-11.5 w-11.5 items-center justify-center rounded-full bg-[#F7931A] bg-opacity-10'>
+                    <span className='text-xl text-[#F7931A]'>$</span>
+                  </div>
+                  
+                  {/* Amount */}
+                  <div className='flex flex-col gap-2'>
+                  <span className='text-sm font-medium text-gray-5 dark:text-gray-4'>
+                    Total Profit/Loss
                   </span>
-                  {/* Calculate sum of profit_loss_pct */}
-                  {(() => {
-                    const totalProfitLossPct = portfolioHistory?.profit_loss_pct.reduce((sum, pct) => sum + pct, 0);
-                    return (
-                      <span className={`flex items-center gap-1 text-sm font-medium ${
-                        totalProfitLossPct >= 0 
-                          ? 'text-[#16A34A]'
-                          : 'text-[#DC2626]'
-                      }`}>
-                        {totalProfitLossPct >= 0 ? '↑' : '↓'}
-                        {formatPercentage(Math.abs(totalProfitLossPct || 0))}
-                      </span>
-                    );
-                  })()}
+                    <span className='text-2xl font-bold text-black dark:text-white'>
+                      ${formatNumber(portfolioHistory?.equity[portfolioHistory?.equity.length - 1] - portfolioHistory?.base_value)}
+                    </span>
+                    {/* Calculate sum of profit_loss_pct */}
+                    {(() => {
+                      const totalProfitLossPct = portfolioHistory?.profit_loss_pct.reduce((sum, pct) => sum + pct, 0);
+                      return (
+                        <span className={`flex items-center gap-1 text-sm font-medium ${
+                          totalProfitLossPct >= 0 
+                            ? 'text-[#16A34A]'
+                            : 'text-[#DC2626]'
+                        }`}>
+                          {totalProfitLossPct >= 0 ? '↑' : '↓'}
+                          {(Math.abs(totalProfitLossPct || 0) * 100).toFixed(2)}%
+                        </span>
+                      );
+                    })()}
+                  </div>
                 </div>
               </div>
             </div>
+
+            {/* Transactions Card */}
+            <div className='flex flex-col gap-4 rounded-sm border-stroke bg-white p-5 shadow-default shadow-1 dark:bg-gray-dark dark:shadow-card'>
+              {/* Chart */}
+              <div className='flex-grow'>
+                <TotalTransaction/>
+              </div>
+              
+              {/* Transaction Stats */}
+              <div className='flex flex-col gap-3'>
+                {/* Buy/Sell Summary */}
+                <div className='flex items-center justify-between'>
+                  <div className='flex flex-col'>
+                    <span className='text-sm font-medium text-gray-5 dark:text-gray-4'>
+                      Total Buy Orders
+                    </span>
+                    <span className='text-lg font-semibold text-success'>
+                      {buyOrders} orders
+                    </span>
+                    <span className='text-sm text-gray-5 dark:text-gray-4'>
+                      total buy: <span className="text-[#16A34A] font-medium">{totalBuyNumber.toFixed(2)}</span>
+                    </span>
+                  </div>
+                  <div className='flex flex-col items-end'>
+                    <span className='text-sm font-medium text-gray-5 dark:text-gray-4'>
+                      Total Sell Orders
+                    </span>
+                    <span className='text-lg font-semibold text-danger'>
+                      {sellOrders} orders
+                    </span>
+                    <span className='text-sm text-gray-5 dark:text-gray-4'>
+                      total sell: <span className="text-[#DC2626] font-medium">{totalSellNumber.toFixed(2)}</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div className='flex flex-col gap-4 rounded-sm border-stroke bg-white p-5 shadow-default shadow-1 dark:bg-gray-dark dark:shadow-card'>
+              {/* Title */}
+              <span className='text-lg font-semibold text-black dark:text-white'>
+                <BuySellOrder />
+                Manual Buy and Sell Order
+              </span>
+
+              {/* Input Fields and Buttons */}
+              <div className='flex flex-col gap-3'>
+                {/* Input Fields */}
+                <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 w-full'>
+                  <input 
+                    type="text" 
+                    value={symbol}
+                    onChange={(e) => setSymbol(e.target.value)}
+                    placeholder="Enter the stock symbol" 
+                    className='w-full rounded-lg border border-stroke bg-transparent px-4 py-2.5 outline-none focus:border-primary dark:border-dark-3 dark:bg-dark-2'
+                  />
+                  <input 
+                    type="number" 
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                    placeholder="Enter the quantity" 
+                    className='w-full rounded-lg border border-stroke bg-transparent px-4 py-2.5 outline-none focus:border-primary dark:border-dark-3 dark:bg-dark-2'
+                  />
+                </div>
+
+                {/* Action Buttons */}
+                <div className='flex gap-3'>
+                  <button 
+                    onClick={() => handleOrderClick('buy')}
+                    className='flex-1 rounded-lg bg-gradient-to-r from-[#2563EB] to-[#3B82F6] py-2.5 font-medium text-white hover:from-[#1D4ED8] hover:to-[#2563EB] transition-all duration-300 shadow-sm hover:shadow-md'
+                  >
+                    Buy
+                  </button>
+                  <button 
+                    onClick={() => handleOrderClick('sell')}
+                    className='flex-1 rounded-lg bg-gradient-to-r from-[#DC2626] to-[#EF4444] py-2.5 font-medium text-white hover:from-[#B91C1C] hover:to-[#DC2626] transition-all duration-300 shadow-sm hover:shadow-md'
+                  >
+                    Sell
+                  </button>
+                </div>
+
+                {/* Order Summary */}
+                <div className='flex items-center justify-between mt-2'>
+                  <div className='flex flex-col'>
+                    <span className='text-sm font-medium text-gray-5 dark:text-gray-4'>
+                      Symbol
+                    </span>
+                    <span className='text-lg font-semibold text-black dark:text-white'>
+                      {symbol || '-'}
+                    </span>
+                  </div>
+                  <div className='flex flex-col items-end'>
+                    <span className='text-sm font-medium text-gray-5 dark:text-gray-4'>
+                      Quantity
+                    </span>
+                    <span className='text-lg font-semibold text-black dark:text-white'>
+                      {quantity || '-'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          {/* Transactions Card */}
-          <div className='flex flex-col gap-4 rounded-sm border border-stroke bg-white p-5 shadow-default shadow-1 dark:bg-gray-dark dark:shadow-card'>
-            {/* Chart */}
-            <div className='flex-grow'>
-              <TotalTransaction/>
-            </div>
-            
-            {/* Transaction Stats */}
-            <div className='flex flex-col gap-3'>
-              {/* Buy/Sell Summary */}
-              <div className='flex items-center justify-between'>
-                <div className='flex flex-col'>
-                  <span className='text-sm font-medium text-gray-5 dark:text-gray-4'>
-                    Total Buy Orders
-                  </span>
-                  <span className='text-lg font-semibold text-success'>
-                    {buyOrders} orders
-                  </span>
-                  <span className='text-sm text-gray-5 dark:text-gray-4'>
-                    total buy: <span className="text-[#16A34A] font-medium">{totalBuyNumber}</span>
-                  </span>
-                </div>
-                <div className='flex flex-col items-end'>
-                  <span className='text-sm font-medium text-gray-5 dark:text-gray-4'>
-                    Total Sell Orders
-                  </span>
-                  <span className='text-lg font-semibold text-danger'>
-                    {sellOrders} orders
-                  </span>
-                  <span className='text-sm text-gray-5 dark:text-gray-4'>
-                    total sell: <span className="text-[#DC2626] font-medium">{totalSellNumber}</span>
-                  </span>
-                </div>
-              </div>
-            </div>
+          
 
+          <div>
+            <ProfitChat portfolioHistory={portfolioHistory} />
           </div>
-
-          <div className='flex flex-col gap-4 rounded-sm border border-stroke bg-white p-5 shadow-default shadow-1 dark:bg-gray-dark dark:shadow-card'>
-            {/* Title */}
-            <span className='text-lg font-semibold text-black dark:text-white'>
-              <BuySellOrder />
-              Manual Buy and Sell Order
-            </span>
-
-            {/* Input Fields and Buttons */}
-            <div className='flex flex-col gap-3'>
-              {/* Input Fields */}
-              <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 w-full'>
-                <input 
-                  type="text" 
-                  value={symbol}
-                  onChange={(e) => setSymbol(e.target.value)}
-                  placeholder="Enter the stock symbol" 
-                  className='w-full rounded-lg border border-stroke bg-transparent px-4 py-2.5 outline-none focus:border-primary dark:border-dark-3 dark:bg-dark-2'
-                />
-                <input 
-                  type="number" 
-                  value={quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
-                  placeholder="Enter the quantity" 
-                  className='w-full rounded-lg border border-stroke bg-transparent px-4 py-2.5 outline-none focus:border-primary dark:border-dark-3 dark:bg-dark-2'
-                />
-              </div>
-
-              {/* Action Buttons */}
-              <div className='flex gap-3'>
-                <button 
-                  onClick={() => handleOrderClick('buy')}
-                  className='flex-1 rounded-lg bg-gradient-to-r from-[#2563EB] to-[#3B82F6] py-2.5 font-medium text-white hover:from-[#1D4ED8] hover:to-[#2563EB] transition-all duration-300 shadow-sm hover:shadow-md'
-                >
-                  Buy
-                </button>
-                <button 
-                  onClick={() => handleOrderClick('sell')}
-                  className='flex-1 rounded-lg bg-gradient-to-r from-[#DC2626] to-[#EF4444] py-2.5 font-medium text-white hover:from-[#B91C1C] hover:to-[#DC2626] transition-all duration-300 shadow-sm hover:shadow-md'
-                >
-                  Sell
-                </button>
-              </div>
-
-              {/* Order Summary */}
-              <div className='flex items-center justify-between mt-2'>
-                <div className='flex flex-col'>
-                  <span className='text-sm font-medium text-gray-5 dark:text-gray-4'>
-                    Symbol
-                  </span>
-                  <span className='text-lg font-semibold text-black dark:text-white'>
-                    {symbol || '-'}
-                  </span>
-                </div>
-                <div className='flex flex-col items-end'>
-                  <span className='text-sm font-medium text-gray-5 dark:text-gray-4'>
-                    Quantity
-                  </span>
-                  <span className='text-lg font-semibold text-black dark:text-white'>
-                    {quantity || '-'}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
         
+          <div className="flex flex-col justify-between gap-10 md:flex-row mt-4">
+            <AccountInfor accountInfo={accountInfo} />
 
-        <div>
-          <ProfitChat portfolioHistory={portfolioHistory} />
-        </div>
-      
-        <div className="flex flex-col justify-between gap-10 md:flex-row mt-4">
-          <AccountInfor accountInfo={accountInfo} />
-
-          <Position positions={positions} />
-        </div>
+            <Position positions={positions} />
+          </div>
 
           
         </div>

@@ -1,10 +1,8 @@
 'use client'
 
-import { useState , useEffect } from "react";
-import apiClient from "@/lib/axios";
-import { toast } from "react-toastify";
-import { TopChannelsSkeleton } from "@/components/Tables/top-channels/skeleton";
-
+import TitleLine from '@/components/TitleLine';
+import apiClient from '@/lib/axios';
+import { useState , useEffect } from 'react';
 
 const formatDateTime = (dateTimeString: string) => {
   const date = new Date(dateTimeString);
@@ -20,61 +18,46 @@ const formatDateTime = (dateTimeString: string) => {
 
 type RowsPerPage = 5 | 10 | 15 | 20;
 
-const TransactionsPage = () => {
+const ClosePositionPage = () => {
 
-  const [historyOrders , setHistoryOrders] = useState<any>([]);
-  const [isLoading , setIsLoading] = useState<boolean>(false);
-  const [rowsPerPage, setRowsPerPage] = useState<RowsPerPage>(10);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [openPositions, setOpenPositions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    setIsLoading(true);
-    apiClient.get('/get_all_orders').then((res) => {
+    const result = apiClient.get("/api/trader/closedpositions")
+    .then((res) => {
       console.log(res.data);
-      setHistoryOrders(res.data);
+      setOpenPositions(res.data);
       setIsLoading(false);
     })
     .catch((err) => {
       console.log(err);
       setIsLoading(false);
     })
+  }, []);
 
-  }, [])
-
-  if(isLoading){
+  if (isLoading) {
     return <div>Loading...</div>
   }
 
-  // Calculate total pages
-  const totalRows = historyOrders.length;
-  const totalPages = Math.ceil(totalRows / rowsPerPage);
+    // Calculate total pages
+    const totalRows = openPositions.length;
+    const totalPages = Math.ceil(totalRows / rowsPerPage);
+  
+    // Get current page data
+    const getCurrentPageData = () => {
+      const startIndex = (currentPage - 1) * rowsPerPage;
+      const endIndex = startIndex + rowsPerPage;
+      return openPositions.slice(startIndex, endIndex);
+    };
 
-  // Get current page data
-  const getCurrentPageData = () => {
-    const startIndex = (currentPage - 1) * rowsPerPage;
-    const endIndex = startIndex + rowsPerPage;
-    return historyOrders.slice(startIndex, endIndex);
-  };
+    return (
+        <div>
+          <TitleLine title="Closed Position" description="My options closed positions" />
 
-  return (
-    <div>
-      <div className="mb-8 ">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-2xl md:text-3xl font-bold text-black dark:text-white">
-            My Transactions
-          </h1>
-          <div className="flex items-center gap-2">
-            <span className="h-1 w-20 bg-primary rounded"></span>
-            <span className="h-1 w-4 bg-primary/60 rounded"></span>
-            <span className="h-1 w-2 bg-primary/40 rounded"></span>
-          </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            My transactions history
-          </p>
-        </div>
-      </div>
-
-      {/* Table Controls */}
+          {/* Table Controls */}
       <div className="mb-4.5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex px-3 items-center gap-3">
           <label className="text-sm font-medium text-gray-600 dark:text-gray-400">
@@ -159,6 +142,7 @@ const TransactionsPage = () => {
 
           <tbody>
             {getCurrentPageData().map((order: any, index: number) => (
+              order.asset_class === "us_option" ? (
               <tr key={order.id} className="border-b border-gray-200 text-center hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800">
                 <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
                   {(currentPage - 1) * rowsPerPage + index + 1}
@@ -180,24 +164,24 @@ const TransactionsPage = () => {
                   {order.status}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {Math.round(order.qty || 0).toFixed(1)}
+                  {order.qty}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {Math.round(order.filled_qty || 0).toFixed(1)}
+                  {order.filled_qty}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
                   {formatDateTime(order.submitted_at)}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {formatDateTime(order.filled_at)}
+                  {order.filled_at ? formatDateTime(order.filled_at) : "-"}
                 </td>
-              </tr>
+              </tr>):("")
             ))}
           </tbody>
         </table>
       </div>
-    </div>
-  );
-};
+        </div>
+    )
+}
 
-export default TransactionsPage;
+export default ClosePositionPage;

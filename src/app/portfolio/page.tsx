@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import apiClient from '@/lib/axios';
 import PortfolioChart from '@/components/portfolioChart';
+import TitleLine from '@/components/TitleLine';
 
 
 type RowsPerPage = 10 | 20 | 'all';
@@ -79,21 +80,7 @@ const MyPortfolio = () => {
 
   return(
     <div>
-      <div className="mb-8 ">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-2xl md:text-3xl font-bold text-black dark:text-white">
-            My Portfolio
-          </h1>
-          <div className="flex items-center gap-2">
-            <span className="h-1 w-20 bg-primary rounded"></span>
-            <span className="h-1 w-4 bg-primary/60 rounded"></span>
-            <span className="h-1 w-2 bg-primary/40 rounded"></span>
-          </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            My portfolio history
-          </p>
-        </div>
-      </div>
+      <TitleLine title="My Portfolio" description="My portfolio history" />
 
       <div className='mb-4'>
         <PortfolioChart portfolioHistory={portfolioHistory}/>
@@ -103,7 +90,7 @@ const MyPortfolio = () => {
       {/* Table Controls */}
       <div className="mb-4.5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex px-3 items-center gap-3">
-          <label className="text-sm font-medium text-gray-600 dark:text-gray-400">
+          <label className="text-sm font-medium text-gray-600 dark:text-gray-400 text-center">
             Show rows:
           </label>
           <select
@@ -146,27 +133,27 @@ const MyPortfolio = () => {
       </div>
 
       <div className="overflow-x-auto p-6 rounded-xl bg-white shadow-1 dark:bg-gray-dark dark:shadow-card mt-3">
-        <table className="w-full min-w-max table-auto text-left">
+        <table className="w-full table-auto border-collapse">
           <thead>
-            <tr className="bg-gray-2 dark:bg-dark-2">
-              <th scope="col" className="px-6 py-4 text-sm font-semibold text-black dark:text-white first:pl-8">
+            <tr className="bg-primary/10 dark:bg-primary/5">
+              <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
                 No
               </th>
-              <th scope="col" className="px-6 py-4 text-sm font-semibold text-black dark:text-white">
+              <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
                 Date
               </th>
-              <th scope="col" className="px-6 py-4 text-sm font-semibold text-black dark:text-white">
+              <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
                 Equity
               </th>
-              <th scope="col" className="px-6 py-4 text-sm font-semibold text-black dark:text-white">
+              <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
                 Profit/Loss
               </th>
-              <th scope="col" className="px-6 py-4 text-sm font-semibold text-black dark:text-white last:pr-8">
+              <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
                 P/L %
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 dark:divide-dark-3">
+          <tbody>
             {getCurrentPageData().map((time, index) => {
               const reverseIndex = portfolioHistory?.timestamp.length - 1 - (
                 rowsPerPage === 'all' ? index : (currentPage - 1) * (rowsPerPage as number) + index
@@ -177,29 +164,29 @@ const MyPortfolio = () => {
               return (
                 <tr 
                   key={time}
-                  className="transition-colors duration-200 hover:bg-gray-1 dark:hover:bg-dark-2"
+                  className="border-b border-gray-200 text-center hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
                 >
-                  <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-black dark:text-white first:pl-8">
+                  <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
                     {(currentPage - 1) * (rowsPerPage === 'all' ? 1 : rowsPerPage) + index + 1}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-black dark:text-white">
+                  <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
                     {formatDate(time)}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-black dark:text-white">
+                  <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
                     ${formatNumber(portfolioHistory?.equity[reverseIndex])}
                   </td>
-                  <td className={`whitespace-nowrap px-6 py-4 text-sm font-medium ${
-                    isProfitPositive ? 'text-success' : 'text-danger'
+                  <td className={`px-4 py-3 text-sm ${
+                    isProfitPositive ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
                   }`}>
-                    <span className="flex items-center gap-1">
+                    <span className="flex items-center justify-center gap-1">
                       {isProfitPositive ? '+' : '-'}
                       ${formatNumber(Math.abs(portfolioHistory?.profit_loss[reverseIndex] || 0))}
                     </span>
                   </td>
-                  <td className={`whitespace-nowrap px-6 py-4 text-sm font-medium last:pr-8 ${
-                    isProfitPctPositive ? 'text-success' : 'text-danger'
+                  <td className={`px-4 py-3 text-sm ${
+                    isProfitPctPositive ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
                   }`}>
-                    <span className="flex items-center gap-1">
+                    <span className="flex items-center justify-center gap-1">
                       {isProfitPctPositive ? '+' : '-'}
                       {formatPercentage(Math.abs(portfolioHistory?.profit_loss_pct[reverseIndex] || 0))}
                     </span>
@@ -209,14 +196,13 @@ const MyPortfolio = () => {
             })}
           </tbody>
           <tfoot>
-            <tr className="bg-gray-2 dark:bg-dark-2">
-              <td className="whitespace-nowrap px-6 py-4 text-sm font-semibold text-black dark:text-white first:pl-8">
-                
+            <tr className="bg-primary/10 dark:bg-primary/5">
+              <td className="px-4 py-3 text-sm text-gray-800 dark:text-gray-200">
               </td>
-              <td className="whitespace-nowrap px-6 py-4 text-sm font-semibold text-black dark:text-white">
+              <td className="px-4 py-3 text-sm font-semibold text-gray-800 dark:text-gray-200">
                 Base Value
               </td>
-              <td className="whitespace-nowrap px-6 py-4 text-sm font-semibold text-black dark:text-white last:pr-8" colSpan={3}>
+              <td className="px-4 py-3 text-sm font-semibold text-gray-800 dark:text-gray-200" colSpan={3}>
                 ${formatNumber(portfolioHistory?.base_value)}
               </td>
             </tr>

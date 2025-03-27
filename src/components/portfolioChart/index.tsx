@@ -147,9 +147,9 @@ const PortfolioChart = ({ portfolioHistory }: PortfolioChartProps) => {
   };
 
   return (
-    <div className="rounded-sm border border-stroke bg-white p-6 shadow-default dark:border-dark-3 dark:bg-dark-2">
+    <div className="rounded-sm border border-stroke bg-white p-6 shadow-default dark:border-dark-3 dark:bg-dark-2 shadow-1 dark:shadow-card">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-xl font-semibold text-black dark:text-white">
+        <h3 className="text-xl font-semibold text-black">
           Portfolio Value
         </h3>
         <select
@@ -158,7 +158,7 @@ const PortfolioChart = ({ portfolioHistory }: PortfolioChartProps) => {
             setTimeRange(e.target.value as '1w' | '2w' | 'all');
             setSelectedPointIndex(null);
           }}
-          className="rounded-lg border border-stroke bg-transparent px-3 py-2 text-sm font-medium outline-none transition-all focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+          className="rounded-lg border border-stroke bg-transparent px-3 py-2 text-sm font-medium outline-none transition-all focus:border-primary dark:border-dark-3 text-black"
         >
           <option value="1w">Last Week</option>
           <option value="2w">Last 2 Weeks</option>

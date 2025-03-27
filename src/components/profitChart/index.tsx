@@ -28,7 +28,7 @@ const ProfitChat = ({ portfolioHistory }: { portfolioHistory: any }) => {
   const maxValue = Math.max(...weeklyData.map(d => Math.abs(d.profit)));
 
   return (
-    <div className="rounded-sm border border-stroke bg-white p-4 shadow-default shadow-default shadow-1 dark:bg-gray-dark dark:shadow-card">
+    <div className="rounded-sm border-stroke bg-white p-4 shadow-default shadow-default shadow-1 dark:bg-gray-dark dark:shadow-card">
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <h3 className="text-xl font-semibold text-black dark:text-white">
