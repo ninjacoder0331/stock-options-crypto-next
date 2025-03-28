@@ -157,12 +157,12 @@ const OptionsTradingPage = () => {
     <div>
       <TitleLine title="Options Trading" description="Options Trading Dashboard" />
 
-      <div className='flex flex-col sm:flex-row gap-4'>
-        <div className='sm:w-1/4 w-full flex flex-col gap-4'>
-
-          {/* symbol search */}
-          <div className='w-full flex flex-col gap-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 pt-10'>
-
+      <div className='flex flex-col lg:flex-row gap-6 p-4'>
+        <div className='lg:w-1/4 w-full flex flex-col gap-5'>
+          {/* Trading Form */}
+          <div className='w-full flex flex-col gap-2 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4'>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white ">Trading Form</h3>
+            
             {/* Search Bar */}
             <div className="relative" ref={searchRef}>
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -178,7 +178,7 @@ const OptionsTradingPage = () => {
                 onFocus={() => symbol.length > 0 && setShowSuggestions(true)}
                 placeholder='Enter Stock Symbol'
                 maxLength={5}
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg 
                          bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 
                          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
                          transition duration-200 ease-in-out
@@ -202,41 +202,67 @@ const OptionsTradingPage = () => {
               )}
             </div>
 
-            <div className='flex flex-row w-full gap-2'>
+            {/* Option Type Selection */}
+            <div className='grid grid-cols-2 gap-3'>
               <button 
                 onClick={() => setOptionType('call')}
-                className={`w-full bg-blue-500 text-white px-4 py-2 rounded-lg ${optionType === 'call' ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'}`}
+                className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg transition-all duration-200
+                          ${optionType === 'call' 
+                            ? 'bg-blue-600 text-white shadow-md hover:bg-blue-700' 
+                            : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'}`}
               >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
                 CALL
               </button>
               <button 
                 onClick={() => setOptionType('put')}
-                className={`w-full bg-red-500 text-white px-4 py-2 rounded-lg ${optionType === 'put' ? 'bg-red-600' : 'bg-gray-300 dark:bg-gray-600'}`}
+                className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg transition-all duration-200
+                          ${optionType === 'put' 
+                            ? 'bg-red-600 text-white shadow-md hover:bg-red-700' 
+                            : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'}`}
               >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6" />
+                </svg>
                 PUT
               </button>
             </div>
 
+            {/* View Chain Button */}
+            <button 
+              className='w-full bg-green-500 hover:bg-green-600 text-white py-2.5 px-4 rounded-lg shadow-md 
+                       transition-all duration-200 flex items-center justify-center gap-2'
+              onClick={() => {viewOptionChain()}}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+              View Chain
+            </button>
+
+            {/* Amount Input */}
             <div className='w-full'>
-              <button 
-                className='w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg'
-                onClick={() => {viewOptionChain()}}
-              >
-                View Chain
-              </button>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <span className="text-gray-500 dark:text-gray-400">$</span>
+                </div>
+                <input 
+                  type="number"
+                  value={amount}
+                  onChange={(e) => {setAmount(e.target.value)}}
+                  className='w-full pl-8 pr-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg
+                           bg-white dark:bg-gray-700 text-gray-900 dark:text-white
+                           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                           transition duration-200 ease-in-out
+                           text-sm font-mono'
+                  placeholder='Enter Amount'
+                />
+              </div>
             </div>
 
-            {/* AMOUNT   */}
-            <div className='w-full'>
-              <input 
-                type="number"
-                className='w-full bg-white dark:bg-gray-700 rounded-lg shadow-lg p-3'
-                placeholder='Enter Amount'
-                onChange={(e) => {setAmount(e.target.value)}}
-              />
-            </div>
-
-            {/* strike price */}
+            {/* Strike Price Input */}
             <div className='w-full'>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -257,21 +283,23 @@ const OptionsTradingPage = () => {
               </div>
             </div>
 
-            {/* buy options function */}
-            <div className='w-full '>
-              <button 
-                className='w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg'
-                onClick={() => {buyOptions()}}
-              >
-                Buy Options
-              </button>
-            </div>
-
+            {/* Buy Options Button */}
+            <button 
+              className='w-full bg-blue-500 hover:bg-blue-600 text-white py-2.5 px-4 rounded-lg shadow-md 
+                       transition-all duration-200 flex items-center justify-center gap-2'
+              onClick={() => {buyOptions()}}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+              Buy Options
+            </button>
           </div>
 
-{/* calendar */}
-          <div className='w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3'>
-            <div className="flex justify-between items-center mb-2">
+          {/* Calendar */}
+          <div className='w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg p-3'>
+            <h3 className="text-base font-semibold text-gray-800 dark:text-white mb-1">Select Date</h3>
+            <div className="flex justify-between items-center mb-1">
               <button 
                 onClick={handlePrevMonth}
                 className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
@@ -293,9 +321,9 @@ const OptionsTradingPage = () => {
               </button>
             </div>
 
-            <div className="grid grid-cols-7 gap-0.5 mb-1">
+            <div className="grid grid-cols-7 gap-0.5 mb-0.5">
               {dayNames.map(day => (
-                <div key={day} className="text-center text-xs font-medium text-gray-500 dark:text-gray-400">
+                <div key={day} className="text-center text-xs text-gray-500 dark:text-gray-400">
                   {day}
                 </div>
               ))}
@@ -320,9 +348,9 @@ const OptionsTradingPage = () => {
                     onClick={() => handleDateClick(day)}
                     className={`
                       aspect-square h-6 flex items-center justify-center rounded text-xs
-                      transition-colors duration-200
+                      transition-all duration-200 shadow-sm
                       ${isSelected 
-                        ? 'bg-blue-600 text-white hover:bg-blue-700' 
+                        ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md' 
                         : isToday
                           ? 'bg-green-300 dark:bg-green-500 text-gray-900 dark:text-white'
                           : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
@@ -335,12 +363,9 @@ const OptionsTradingPage = () => {
               })}
             </div>
           </div>
-
-
-        
         </div>
 
-        <div className='sm:w-3/4 w-full'>
+        <div className='lg:w-3/4 w-full'>
           {optionChain && <OptionsChainComponent data={optionChain.snapshots} current_Price={current_Price} selectedDate={selectedDate} setStrikePrice={setStrikePrice} />}
         </div>
       </div>
