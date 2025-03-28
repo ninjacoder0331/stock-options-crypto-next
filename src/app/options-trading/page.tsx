@@ -202,11 +202,10 @@ const OptionsTradingPage = () => {
               )}
             </div>
 
-            {/* option type function */}
             <div className='flex flex-row w-full gap-2'>
               <button 
                 onClick={() => setOptionType('call')}
-                className={`w-full bg-red-500 text-white px-4 py-2 rounded-lg ${optionType === 'call' ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'}`}
+                className={`w-full bg-blue-500 text-white px-4 py-2 rounded-lg ${optionType === 'call' ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'}`}
               >
                 CALL
               </button>
@@ -218,7 +217,6 @@ const OptionsTradingPage = () => {
               </button>
             </div>
 
-            {/* view chain function */}
             <div className='w-full'>
               <button 
                 className='w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg'
