@@ -296,7 +296,6 @@ const OptionsTradingPage = () => {
             </button>
           </div>
 
-          {/* Calendar */}
           <div className='w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg p-3'>
             <h3 className="text-base font-semibold text-gray-800 dark:text-white mb-1">Select Date</h3>
             <div className="flex justify-between items-center mb-1">
