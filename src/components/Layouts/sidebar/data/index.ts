@@ -37,11 +37,10 @@ export const NAV_DATA = [
       },
       {
         title: "Options Trading",
-        url: "/options",
+        url: "/options-trading",
         icon: Icons.FourCircle,
         items: [],
       },
-      
     ],
   },
 ];

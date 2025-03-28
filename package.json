@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroui/react": "^2.7.5",
+    "@internationalized/date": "^3.7.0",
+    "@types/react-datepicker": "^6.2.0",
     "axios": "^1.8.1",
     "bcrypt": "^5.1.1",
     "chart.js": "^4.4.8",
@@ -23,6 +26,7 @@
     "nextjs-toploader": "^3.7.15",
     "react": "19.0.0",
     "react-chartjs-2": "^5.3.0",
+    "react-datepicker": "^8.2.1",
     "react-dom": "19.0.0",
     "react-modal-video": "^2.0.1",
     "react-toastify": "^11.0.5",

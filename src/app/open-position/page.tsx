@@ -15,18 +15,27 @@ const OpenPositionPage = () => {
   
 
   useEffect(() => {
-    const result = apiClient.get("/api/trader/openpositions")
-    .then((res) => {
-      console.log(res.data);
-      setStockOpenPositions(res.data.stocks);
-      setOpenPositions(res.data.options);
-      setIsLoading(false);
-    })
-    .catch((err) => {
-      console.log(err);
-      setIsLoading(false);
-    })
-    }, []);
+    const fetchData = async () => {
+      try {
+        const response = await apiClient.get("/api/trader/openpositions");
+        setStockOpenPositions(response.data.stocks);
+        setOpenPositions(response.data.options);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setIsLoading(false);
+      }
+    };
+
+    // Initial fetch
+    fetchData();
+
+    // Set up interval
+    const interval = setInterval(fetchData, 10000);
+
+    // Cleanup
+    return () => clearInterval(interval);
+  }, []);
 
 
     if (isLoading) {

@@ -1,7 +1,7 @@
 'use client'
 import { useState , useEffect } from "react";
 import apiClient from "@/lib/axios";
-
+import { toast } from "react-toastify";   
 const formatDateTime = (dateTimeString: string) => {
   const date = new Date(dateTimeString);
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -46,14 +46,21 @@ const OpenOptionsPositions = ({ openPositions }: { openPositions: any[] }) => {
     const payload = {
       symbol: selectedOrder.symbol,
       side  : selectedOrder.side,
-      qty   : selectedOrder.qty,
+      quantity   : selectedOrder.qty,
     }
 
     const result = apiClient.post("/api/trader/sellOptionsOrder", payload).then((res) => {
-      console.log(res.data);
-      setShowConfirmModal(false);
-      setSelectedOrder(null);
+      if(res.data === 200){
+        toast.success("Position closed successfully");
+        console.log(res.data);
+        setShowConfirmModal(false);
+        setSelectedOrder(null);
+      }
+      else{
+        toast.info("Position is not closed. Please check the market time or sufficient balance");
+      }
     }).catch((err) => {
+      toast.error("Error closing position");
       console.log(err);
     })
   };
