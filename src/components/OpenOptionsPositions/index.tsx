@@ -40,8 +40,6 @@ const OpenOptionsPositions = ({ openPositions }: { openPositions: any[] }) => {
   };
 
   const handleConfirmClose = () => {
-    // Add your close position logic here
-    console.log('Closing position:', selectedOrder);
 
     const payload = {
       symbol: selectedOrder.symbol,
@@ -52,7 +50,6 @@ const OpenOptionsPositions = ({ openPositions }: { openPositions: any[] }) => {
     const result = apiClient.post("/api/trader/sellOptionsOrder", payload).then((res) => {
       if(res.data === 200){
         toast.success("Position closed successfully");
-        console.log(res.data);
         setShowConfirmModal(false);
         setSelectedOrder(null);
       }
