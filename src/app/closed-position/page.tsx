@@ -45,7 +45,7 @@ const ClosePositionPage = () => {
     // Calculate total pages
     const totalRows = openPositions.length;
     const totalPages = Math.ceil(totalRows / rowsPerPage);
-  
+
     // Get current page data
     const getCurrentPageData = () => {
       const startIndex = (currentPage - 1) * rowsPerPage;
@@ -76,6 +76,13 @@ const ClosePositionPage = () => {
             <option value={15} className="dark:text-white dark:bg-gray-dark">15 rows</option>
             <option value={20} className="dark:text-white dark:bg-gray-dark">20 rows</option>
           </select>
+        </div>
+
+        <div className="flex flex-col items-center justify-center gap-1 mb-4">
+          <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-[#4B70E2] bg-clip-text text-transparent">
+            Options Closed Positions
+          </h2>
+          <div className="h-1 w-20 bg-gradient-to-r from-primary to-[#4B70E2] rounded-full"></div>
         </div>
 
         {/* Pagination */}

@@ -1,7 +1,10 @@
 'use client'
+
 import { useState , useEffect } from "react";
 import apiClient from "@/lib/axios";
 import { toast } from "react-toastify";
+import { TopChannelsSkeleton } from "@/components/Tables/top-channels/skeleton";
+
 const formatDateTime = (dateTimeString: string) => {
   const date = new Date(dateTimeString);
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -10,74 +13,67 @@ const formatDateTime = (dateTimeString: string) => {
   const hours = date.getHours() % 12 || 12;
   const minutes = date.getMinutes().toString().padStart(2, '0');
   const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
-  
   return `${month}/${day}/${year} ${hours}:${minutes} ${ampm}`;
 };
 
 type RowsPerPage = 5 | 10 | 15 | 20;
 
+const StockClosedPosition = () => {
 
-const OpenStockPositions = ({ stockOpenPositions }: { stockOpenPositions  : any[] }) => {
+  const [historyOrders , setHistoryOrders] = useState<any>([]);
+  const [isLoading , setIsLoading] = useState<boolean>(false);
+  const [rowsPerPage, setRowsPerPage] = useState<RowsPerPage>(10);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState<any>(null);
+  useEffect(() => {
+    setIsLoading(true);
+    apiClient.get('/get_all_orders').then((res) => {
+      console.log(res.data);
+      setHistoryOrders(res.data);
+      setIsLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setIsLoading(false);
+    })
+
+  }, [])
+
+  if(isLoading){
+    return <div>Loading...</div>
+  }
+
   // Calculate total pages
-  const totalRows = stockOpenPositions.length;
+  const totalRows = historyOrders.length;
   const totalPages = Math.ceil(totalRows / rowsPerPage);
 
   // Get current page data
   const getCurrentPageData = () => {
     const startIndex = (currentPage - 1) * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
-    return stockOpenPositions.slice(startIndex, endIndex);
+    return historyOrders.slice(startIndex, endIndex);
   };
 
-  const handleCloseClick = (order: any) => {
-    setSelectedOrder(order);
-    setShowConfirmModal(true);
-  };
-
-  const handleConfirmClose = () => {
-    // Add your close position logic here
-    console.log('Closing position:', selectedOrder);
-
-    const payload = {
-      symbol: selectedOrder.symbol,
-      side  : selectedOrder.side,
-      quantity   : selectedOrder.qty,
-    }
-
-    console.log("payload" , payload);
-
-    const result = apiClient.post("/api/trader/closeStockOrder", payload).then((res) => {
-
-      console.log("res" , res);
-      if(res.data === 200){
-        toast.success("Position closed successfully");
-        console.log(res.data);
-        setShowConfirmModal(false);
-        setSelectedOrder(null);
-      }
-      else{
-        toast.info("Position is not closed. Please check the market time or sufficient balance");
-      }
-    }).catch((err) => {
-      toast.error("Error closing position");
-      console.log(err);
-    })
-
-  };
-    
-  useEffect(() => {
-    console.log("open stock positions" , stockOpenPositions);
-  }, [stockOpenPositions]);
   return (
     <div>
-      
+      <div className="mb-8 ">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-2xl md:text-3xl font-bold text-black dark:text-white">
+            My Transactions
+          </h1>
+          <div className="flex items-center gap-2">
+            <span className="h-1 w-20 bg-primary rounded"></span>
+            <span className="h-1 w-4 bg-primary/60 rounded"></span>
+            <span className="h-1 w-2 bg-primary/40 rounded"></span>
+          </div>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            My transactions history
+          </p>
+        </div>
+      </div>
 
-      <div className="mb-4.5 flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-between">
+      {/* Table Controls */}
+      <div className="mb-4.5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex px-3 items-center gap-3">
           <label className="text-sm font-medium text-gray-600 dark:text-gray-400">
             Show rows:
@@ -99,10 +95,11 @@ const OpenStockPositions = ({ stockOpenPositions }: { stockOpenPositions  : any[
 
         <div className="flex flex-col items-center justify-center gap-1 mb-4">
           <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-[#4B70E2] bg-clip-text text-transparent">
-            Stock Open Positions
+            Stock Closed Positions
           </h2>
           <div className="h-1 w-20 bg-gradient-to-r from-primary to-[#4B70E2] rounded-full"></div>
         </div>
+
         {/* Pagination */}
         <div className="flex items-center gap-2 px-3">
           <button
@@ -142,134 +139,70 @@ const OpenStockPositions = ({ stockOpenPositions }: { stockOpenPositions  : any[
                 Asset
               </th>
               <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
+                Order Type
+              </th>
+              <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
                 Side
+              </th>
+              <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
+                Status
               </th>
               <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
                 Qty
               </th>
               <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
-                Price
+                Filled Qty
               </th>
               <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
-                Avg Entry
+                Submitted At
               </th>
               <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
-                Today's P/L(%)
-              </th>
-              <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
-                Today's P/L($)
-              </th>
-              <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
-                Total P/L(%)
-              </th>
-              <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
-                Total P/L($)
-              </th>
-              <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
-                Action
+                Filled At
               </th>
             </tr>
           </thead>
 
           <tbody>
-            {stockOpenPositions.map((order: any, index: number) => (
-              order.asset_class === "us_equity" ? (
-              <tr key={index} className="border-b border-gray-200 text-center hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800">
+            {getCurrentPageData().map((order: any, index: number) => (
+              <tr key={order.id} className="border-b border-gray-200 text-center hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800">
                 <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
                   {(currentPage - 1) * rowsPerPage + index + 1}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
                   {order.symbol}
                 </td>
+                <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
+                  {order.order_type}
+                </td>
                 <td className={`px-4 py-3 text-sm ${
-                  order.side === 'long' 
+                  order.side === 'buy' 
                     ? 'text-green-600 dark:text-green-400' 
                     : 'text-red-600 dark:text-red-400'
                 }`}>
                   {order.side}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {order.qty}
+                  {order.status}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {order.current_price}
+                  {Math.round(order.qty || 0).toFixed(1)}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {order.avg_entry_price}
-                </td>
-                <td className={`px-4 py-3 text-sm ${
-                  order.unrealized_intraday_plpc >= 0 
-                    ? 'text-green-600 dark:text-green-400' 
-                    : 'text-red-600 dark:text-red-400'
-                }`}>
-                  {(order.unrealized_intraday_plpc >= 0 ? '+' : '')}{Number(order.unrealized_intraday_plpc * 100 || 0).toFixed(2)}%
-                </td>
-                <td className={`px-4 py-3 text-sm ${
-                  order.unrealized_intraday_pl >= 0 
-                    ? 'text-green-600 dark:text-green-400' 
-                    : 'text-red-600 dark:text-red-400'
-                }`}>
-                  {(order.unrealized_intraday_pl >= 0 ? '+' : '-')}${Number(Math.abs(order.unrealized_pl || 0)).toFixed(2)}
-                </td>
-                <td className={`px-4 py-3 text-sm ${
-                  order.unrealized_plpc >= 0 
-                    ? 'text-green-600 dark:text-green-400' 
-                    : 'text-red-600 dark:text-red-400'
-                }`}>
-                  {(order.unrealized_plpc >= 0 ? '+' : '')}{Number(order.unrealized_plpc * 100 || 0).toFixed(2)}%
-                </td>
-                <td className={`px-4 py-3 text-sm ${
-                  order.unrealized_pl >= 0 
-                    ? 'text-green-600 dark:text-green-400' 
-                    : 'text-red-600 dark:text-red-400'
-                }`}>
-                  {(order.unrealized_pl >= 0 ? '+' : '-')}${Number(Math.abs(order.unrealized_pl || 0)).toFixed(2)}
+                  {Math.round(order.filled_qty || 0).toFixed(1)}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  <button 
-                    onClick={() => handleCloseClick(order)}
-                    className="bg-gradient-to-r from-[#FF4D4D] to-[#FF6B6B] hover:from-[#FF3333] hover:to-[#FF4D4D] text-white px-4 py-2 rounded-lg transition-all duration-300"
-                  >
-                    Close
-                  </button>
+                  {formatDateTime(order.submitted_at)}
                 </td>
-              </tr>):("")
+                <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
+                  {formatDateTime(order.filled_at)}
+                </td>
+              </tr>
             ))}
           </tbody>
         </table>
       </div>
-      {/* Confirmation Modal */}
-      {showConfirmModal && (
-        <div className="fixed inset-0 bg-black/50  flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-slate-800 rounded-lg p-6 max-w-sm w-full mx-4 shadow-xl">
-            <h3 className="text-lg font-semibold text-black dark:text-white mb-4">
-              Confirm Close Position
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
-              Are you sure you want to close this position?
-            </p>
-            <div className="flex gap-3">
-              <button
-                onClick={handleConfirmClose}
-                className="flex-1 rounded-lg bg-gradient-to-r from-[#FF4D4D] to-[#FF6B6B] py-2.5 font-medium text-white hover:from-[#FF3333] hover:to-[#FF4D4D] transition-all duration-300"
-              >
-                OK
-              </button>
-              <button
-                onClick={() => {
-                  setShowConfirmModal(false);
-                  setSelectedOrder(null);
-                }}
-                className="flex-1 rounded-lg py-2.5 font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-slate-500 hover:bg-gray-200 dark:hover:bg-dark transition-all duration-300"
-              >
-                Cancel
-              </button>
-          </div>
-        </div>
-        </div>
-      )}
     </div>
-  )
-}
+  );
+};
 
-export default OpenStockPositions;
+export default StockClosedPosition;
