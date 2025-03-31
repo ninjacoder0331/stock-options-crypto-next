@@ -56,21 +56,6 @@ const StockClosedPosition = () => {
 
   return (
     <div>
-      <div className="mb-8 ">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-2xl md:text-3xl font-bold text-black dark:text-white">
-            My Transactions
-          </h1>
-          <div className="flex items-center gap-2">
-            <span className="h-1 w-20 bg-primary rounded"></span>
-            <span className="h-1 w-4 bg-primary/60 rounded"></span>
-            <span className="h-1 w-2 bg-primary/40 rounded"></span>
-          </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            My transactions history
-          </p>
-        </div>
-      </div>
 
       {/* Table Controls */}
       <div className="mb-4.5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
