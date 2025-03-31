@@ -56,7 +56,6 @@ const OptionsClosedPosition = () => {
     return (
         <div>
           
-
           {/* Table Controls */}
       <div className="mb-4.5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex px-3 items-center gap-3">

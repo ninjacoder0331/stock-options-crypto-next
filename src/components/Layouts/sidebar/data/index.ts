@@ -25,17 +25,17 @@ export const NAV_DATA = [
       
       {
         title: "Transaction History",
-        url: "/transactions",
-        icon: Icons.Table,
-        items: [],
-      },
-      
-      {
-        title: "Closed Position",
         url: "/closed-position",
         icon: Icons.Table,
         items: [],
       },
+      
+      // {
+      //   title: "Closed Position",
+      //   url: "/closed-position",
+      //   icon: Icons.Table,
+      //   items: [],
+      // },
       {
         title: "Options Trading",
         url: "/options-trading",

@@ -2,7 +2,7 @@
 
 const TitleLine = ({title, description}: {title: string, description: string}) => {
   return (
-    <div className="mb-8 ">
+    <div className="mb-8 w-full">
         <div className="flex flex-col gap-2">
           <h1 className="text-2xl md:text-3xl font-bold text-black dark:text-white">
             {title}
