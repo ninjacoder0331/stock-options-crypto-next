@@ -7,6 +7,18 @@ const menuData: Menu[] = [
     path: "/",
     newTab: false,
   },
+  {
+    id: 2,
+    title: "Sign In",
+    path: "/signin",
+    newTab: false,
+  },
+  {
+    id: 3,
+    title: "Sign Up",
+    path: "/signup",
+    newTab: false,
+  },
   // {
   //   id: 2,
   //   title: "Open Trades",

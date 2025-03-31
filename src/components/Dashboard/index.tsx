@@ -22,8 +22,8 @@ const Hero = () => {
         id="home"
         className=" relative z-10 overflow-hidden bg-white pb-16 pt-[120px] dark:bg-gray-dark md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]"
       >
-        <div className="container flex flex-row items-center align-middle">
-          <div className=" w-1/2 px-4">
+        <div className="container flex sm:flex-row flex-col items-center align-middle">
+          <div className=" w-full sm:w-1/2 px-4">
               <div className="wow fadeInUp mx-auto max-w-[800px] text-center">
                 <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
                   Trade Smarter, Earn Faster

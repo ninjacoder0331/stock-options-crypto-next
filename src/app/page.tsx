@@ -17,6 +17,10 @@ export default function Home() {
       setToken(token);
     }
   }, [pathname]);
+
+
+  
+
   return (
     <>
       {!token ? <Hero /> : 

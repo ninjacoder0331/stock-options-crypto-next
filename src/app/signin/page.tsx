@@ -39,7 +39,7 @@ const SigninPage = () => {
       // await checkAuth();
       
       await setTimeout(() => {
-        window.location.href = '/';
+        window.location.href = '/open-position';
       }, 1500);
 
       

@@ -5,8 +5,14 @@ export const NAV_DATA = [
     label: "MAIN MENU",
     items: [
       {
+        title: "Open Position",
+        url: "/open-position",
+        icon: Icons.Table,
+        items: [],
+      },
+      {
         title: "Overview",
-        url: "/",
+        url: "/overView",
         icon: Icons.HomeIcon,
         items: [],
       },
@@ -23,12 +29,7 @@ export const NAV_DATA = [
         icon: Icons.Table,
         items: [],
       },
-      {
-        title: "Open Position",
-        url: "/open-position",
-        icon: Icons.Table,
-        items: [],
-      },
+      
       {
         title: "Closed Position",
         url: "/closed-position",
