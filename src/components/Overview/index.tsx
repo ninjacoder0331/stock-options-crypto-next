@@ -4,7 +4,7 @@ import { useState , useEffect } from "react";
 import apiClient from "@/lib/axios";
 import AccountInfor from "../Stocktable/accountInfor";
 import Position from "./position";
-import { BuySellOrder, ProfitLoss, TotalTransaction, TotalView } from 'public/index';
+import { BuySellOrder, ProfitLoss, TotalTransaction, TotalView, ViewIcon } from 'public/index';
 import ProfitChat from "../profitChart";
 import { toast } from "react-toastify";
 const Overview = () => {
@@ -122,13 +122,13 @@ const Overview = () => {
               <span className="h-1 w-2 bg-primary/40 rounded"></span>
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              Your portfolio and trading activity at a glance
+              Your Stock trading portfolio and trading activity at a glance
             </p>
           </div>
         </div>
         <div className="">
               
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-4 pb-4'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 pb-4'>
 
             {/* <div>
               <TotalView />
@@ -278,6 +278,8 @@ const Overview = () => {
                 </div>
               </div>
             </div>
+
+         
 
           </div>
 

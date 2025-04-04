@@ -42,6 +42,12 @@ export const NAV_DATA = [
         icon: Icons.FourCircle,
         items: [],
       },
+      {
+        title: "Settings",
+        url: "/settings",
+        icon: Icons.Table,
+        items: [],
+      },
     ],
   },
 ];
