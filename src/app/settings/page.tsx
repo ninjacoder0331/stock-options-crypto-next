@@ -23,6 +23,10 @@ const SettingsPage = () => {
   }
 
   const saveSettings = async () => {
+    if (stockAmount === "" || optionAmount === "") {
+      toast.error("Please enter a valid amount")
+      return
+    }
     const response = apiClient.post("/saveSettings", {
       stockAmount: stockAmount,
       optionsAmount: optionAmount
@@ -68,11 +72,11 @@ const SettingsPage = () => {
               <div className='grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg'>
                 <div className="flex flex-col gap-1">
                   <span className="text-xs text-gray-500 dark:text-gray-400">Stock Amount</span>
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{stockAmountLabel}</span>
+                  <span className="text-sm font-medium text-green-500 dark:text-green-500">{stockAmountLabel}</span>
                 </div>
                 <div className="flex flex-col gap-1">
                   <span className="text-xs text-gray-500 dark:text-gray-400">Options Amount</span>
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{optionAmountLabel}</span>
+                  <span className="text-sm font-medium text-green-500 dark:text-green-500">{optionAmountLabel}</span>
                 </div>
               </div>
             </div>
