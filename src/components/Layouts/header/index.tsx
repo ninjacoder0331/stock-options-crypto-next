@@ -33,45 +33,60 @@ export function HeaderDashboard() {
   }, [pathname]);
 
   return (  
-    <header className="sticky top-0 z-30 flex items-center justify-between border-b border-stroke bg-white px-4 py-5 shadow-1 dark:border-stroke-dark dark:bg-gray-dark md:px-5 2xl:px-10">
-      <button 
+    <header className="sticky top-0 z-30 flex items-center justify-between border-b border-stroke/50 bg-white/95 dark:bg-gray-dark/95 backdrop-blur-md px-4 py-3.5 shadow-sm dark:border-stroke-dark/50 md:px-6 2xl:px-8">
+      <div className="flex items-center gap-4">
+        <button 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden p-2 focus:outline-none"
+          className="md:hidden p-2 rounded-lg hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 active:scale-95"
         >
           {/* Hamburger Icon - shows when menu is closed */}
           <div className={`space-y-1.5 transition-all ${isMenuOpen ? 'hidden' : 'block'}`}>
-            <span className="block w-6 h-0.5 bg-dark dark:bg-white"></span>
-            <span className="block w-6 h-0.5 bg-dark dark:bg-white"></span>
-            <span className="block w-6 h-0.5 bg-dark dark:bg-white"></span>
+            <span className="block w-5 h-0.5 bg-dark dark:bg-white rounded-full transition-transform"></span>
+            <span className="block w-5 h-0.5 bg-dark dark:bg-white rounded-full transition-transform"></span>
+            <span className="block w-5 h-0.5 bg-dark dark:bg-white rounded-full transition-transform"></span>
           </div>
           {/* Close Icon - shows when menu is open */}
           <div className={`${isMenuOpen ? 'block' : 'hidden'}`}>
-            <span className="block w-6 h-0.5 bg-dark dark:bg-white rotate-45 translate-y-0.5"></span>
-            <span className="block w-6 h-0.5 bg-dark dark:bg-white -rotate-45 -translate-y-0.5"></span>
+            <span className="block w-5 h-0.5 bg-dark dark:bg-white rounded-full rotate-45 translate-y-1.5 transition-transform"></span>
+            <span className="block w-5 h-0.5 bg-dark dark:bg-white rounded-full -rotate-45 -translate-y-1.5 transition-transform"></span>
           </div>
         </button>
 
-
-      <div className="max-xl:hidden flex flex-row items-center gap-4 justify-center">
-        <h3 className="mb-1 text-xl md:text-2xl lg:text-3xl font-bold relative group">
-            <span className="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent tracking-tight">
-                Intuitive Capital
+        <div className="flex flex-row items-center gap-4 justify-center">
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold relative group">
+            <span className="bg-gradient-to-r from-emerald-600 via-blue-500 to-emerald-600 bg-clip-text text-transparent tracking-tight">
+              Intuitive Capital
             </span>
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-500 group-hover:w-full transition-all duration-300"></span>
-        </h3>
-
-        {/* <p className="font-medium">Trading Dashboard</p> */}
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-500 via-blue-500 to-emerald-500 group-hover:w-full transition-all duration-300"></span>
+          </h3>
+        </div>
       </div>
-      <div className="hidden md:flex flex-row items-center justify-center gap-2 lg:gap-4 ">
+
+      <div className="hidden md:flex flex-row items-center justify-center gap-1 lg:gap-4">
         {
           headerTitle?.map((items: any) => (
             items.items.map((item: any) => (
               <Link 
                 href={item.url} 
                 key={item.title}
-                className="px-2 py-1 text-sm lg:text-base hover:text-primary transition-colors"
+                className={`
+                  px-3.5 py-2 
+                  text-sm lg:text-base 
+                  font-medium
+                  rounded-lg
+                  transition-all duration-200
+                  hover:bg-gray-50/80 dark:hover:bg-gray-800/80
+                  active:scale-[0.98]
+                  ${pathname === item.url 
+                    ? 'text-primary bg-primary/5 dark:bg-primary/10 shadow-sm' 
+                    : 'text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary'
+                  }
+                `}
               >
-                {item.title}
+                <div className="flex items-center gap-2">
+                  {item.icon && <span className="text-lg opacity-80">{item.icon}</span>}
+                  <span>{item.title}</span>
+                </div>
               </Link>
             ))
           ))
@@ -80,31 +95,45 @@ export function HeaderDashboard() {
 
       {/* Mobile Navigation */}
       <div className="md:hidden">
-        {/* Add your mobile menu button/hamburger here */}
-        
-
-        {/* Mobile Menu */}
         <div 
           className={`
             md:hidden 
-            fixed top-[64px] left-0 right-0 
-            bg-white dark:bg-gray-900 
+            fixed top-[52px] left-0 right-0 
+            bg-white/95 dark:bg-gray-900/95 
+            backdrop-blur-md
+            border-t border-gray-100/50 dark:border-gray-800/50
             shadow-lg 
             transition-all duration-300 ease-in-out
+            z-50
             ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'}
           `}
         >
-          <div className="flex flex-col items-center gap-4 py-6">
+          <div className="flex flex-col items-center gap-1 py-3 px-4">
             {
               headerTitle?.map((items: any) => (
                 items.items.map((item: any) => (
                   <Link 
                     href={item.url} 
                     key={item.title}
-                    className="px-4 py-2 text-base hover:text-primary transition-colors w-full text-center"
-                    onClick={() => setIsMenuOpen(false)} // Close menu when link is clicked
+                    className={`
+                      w-full 
+                      px-4 py-3 
+                      text-sm font-medium
+                      rounded-lg
+                      transition-all duration-200
+                      hover:bg-gray-50/80 dark:hover:bg-gray-800/80
+                      active:scale-[0.98]
+                      ${pathname === item.url 
+                        ? 'text-primary bg-primary/5 dark:bg-primary/10 shadow-sm' 
+                        : 'text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary'
+                      }
+                    `}
+                    onClick={() => setIsMenuOpen(false)}
                   >
-                    {item.title}
+                    <div className="flex items-center justify-center gap-2">
+                      {item.icon && <span className="text-lg opacity-80">{item.icon}</span>}
+                      <span>{item.title}</span>
+                    </div>
                   </Link>
                 ))
               ))
@@ -114,19 +143,7 @@ export function HeaderDashboard() {
       </div>
 
       <div className="flex flex-row items-center justify-right gap-2 min-[300px]:gap-4">
-        {/* <div className="relative w-full max-w-[300px]">
-          <input
-            type="search"
-            placeholder="Search"
-            className="flex w-full items-center gap-3.5 rounded-full border bg-gray-2 py-3 pl-[53px] pr-5 outline-none transition-colors focus-visible:border-primary dark:border-dark-3 dark:bg-dark-2 dark:hover:border-dark-4 dark:hover:bg-dark-3 dark:hover:text-dark-6 dark:focus-visible:border-primary"
-          />
-
-          <SearchIcon className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 max-[1015px]:size-5" />
-        </div> */}
-
         <ThemeToggleSwitch />
-
-        <Notification />
 
         <div className="shrink-0">
           <UserInfo />
