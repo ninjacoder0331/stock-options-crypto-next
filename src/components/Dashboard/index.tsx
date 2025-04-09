@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useEffect } from "react";
 import dynamic from "next/dynamic";
+import { TrendingUpIcon, GlobeIcon, UserIcon } from "@/assets/icons";
+import { PieChart, Table } from "@/components/Layouts/sidebar/icons";
 
 const Hero = () => {
   useEffect(() => {
@@ -20,36 +22,124 @@ const Hero = () => {
     <div className="h-full">
       <section
         id="home"
-        className=" relative z-10 overflow-hidden bg-white pb-16 pt-[120px] dark:bg-gray-dark md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]"
+        className="relative z-10 overflow-hidden bg-gradient-to-b from-white to-gray-50 dark:from-gray-dark dark:to-gray-900 pb-16 pt-[100px] md:pb-[120px] md:pt-[130px] xl:pb-[160px] xl:pt-[160px] 2xl:pb-[200px] 2xl:pt-[180px]"
       >
-        <div className="container flex sm:flex-row flex-col items-center align-middle">
-          <div className=" w-full sm:w-1/2 px-4">
-              <div className="wow fadeInUp mx-auto max-w-[800px] text-center">
-                <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                  Trade Smarter, Earn Faster
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+            <div className="w-full lg:w-1/2">
+              <div className="wow fadeInUp max-w-[600px]">
+                <div className="mb-6 inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
+                  <span className="mr-2 flex h-2 w-2 rounded-full bg-primary"></span>
+                  Advanced Trading Platform
+                </div>
+                
+                <h1 className="mb-6 text-4xl font-bold leading-tight text-black dark:text-white sm:text-5xl md:text-6xl">
+                  <span className="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+                    Trade Smarter,
+                  </span>
+                  <br />
+                  <span className="bg-gradient-to-r from-emerald-600 to-primary bg-clip-text text-transparent">
+                    Earn Faster
+                  </span>
                 </h1>
-                <h2 className="mb-5 text-xl font-medium !leading-relaxed text-body-color dark:text-body-color-dark sm:text-2xl md:text-[22px]">
+                
+                <h2 className="mb-6 text-xl font-medium !leading-relaxed text-gray-700 dark:text-gray-300 sm:text-2xl">
                   Unlock the Power of Stock & Options Trading
                 </h2>
-                <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
+                
+                <p className="mb-8 text-base !leading-relaxed text-gray-600 dark:text-gray-400 sm:text-lg">
                   Master the markets with cutting-edge tools, real-time insights, and powerful strategies. Take control of your financial future and trade with confidence.
                 </p>
+                
+                <div className="flex flex-col sm:flex-row gap-4 mb-10">
+                  <button className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-primary/90 hover:shadow-lg active:scale-95">
+                    Get Started
+                    <TrendingUpIcon className="ml-2 h-5 w-5" />
+                  </button>
+                  <button className="inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-6 py-3 text-base font-medium text-gray-700 dark:text-gray-300 transition duration-300 ease-in-out hover:bg-gray-100 dark:hover:bg-gray-800 active:scale-95">
+                    Learn More
+                    <GlobeIcon className="ml-2 h-5 w-5" />
+                  </button>
+                </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                  <div className="flex items-center gap-3 rounded-lg bg-white p-4 shadow-sm dark:bg-gray-800">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                      <PieChart className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-medium text-gray-900 dark:text-white">Advanced Analytics</h3>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Real-time insights</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-3 rounded-lg bg-white p-4 shadow-sm dark:bg-gray-800">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary/10">
+                      <Table className="h-5 w-5 text-secondary" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-medium text-gray-900 dark:text-white">Smart Trading</h3>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">AI-powered tools</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-3 rounded-lg bg-white p-4 shadow-sm dark:bg-gray-800">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-success/10">
+                      <UserIcon className="h-5 w-5 text-success" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-medium text-gray-900 dark:text-white">Expert Support</h3>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">24/7 assistance</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-          </div>
-          <div className="wow fadeInUp mt-12 w-full px-4 lg:mt-0 lg:w-1/2">
+            </div>
+            
+            <div className="w-full lg:w-1/2">
               <div className="relative z-10 mx-auto max-w-[600px]">
-              <DynamicImage
-                  src="/images/tradingview.png"
-                  alt="tradingimage"
-                  className="mx-auto rounded-md shadow-lg dark:shadow-gray-800"
-                  width={600}
-                  height={600}
-                  priority
-                />
-                <div className="absolute -left-4 -top-4 -z-10 h-full w-full rounded-md bg-primary/20 dark:bg-primary/10"></div>
+                <div className="relative rounded-xl overflow-hidden shadow-2xl">
+                  <DynamicImage
+                    src="/images/tradingview.png"
+                    alt="Trading Platform Dashboard"
+                    className="w-full h-auto"
+                    width={600}
+                    height={600}
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent dark:from-primary/10"></div>
+                </div>
+                
+                {/* Floating elements */}
+                <div className="absolute -top-4 -right-4 z-20 animate-float">
+                  <div className="rounded-lg bg-white p-4 shadow-lg dark:bg-gray-800">
+                    <div className="flex items-center gap-3">
+                      <div className="h-3 w-3 rounded-full bg-success"></div>
+                      <div>
+                        <p className="text-xs font-medium text-gray-900 dark:text-white">AAPL</p>
+                        <p className="text-sm font-bold text-success">+2.5%</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="absolute -bottom-4 -left-4 z-20 animate-float-delayed">
+                  <div className="rounded-lg bg-white p-4 shadow-lg dark:bg-gray-800">
+                    <div className="flex items-center gap-3">
+                      <div className="h-3 w-3 rounded-full bg-danger"></div>
+                      <div>
+                        <p className="text-xs font-medium text-gray-900 dark:text-white">TSLA</p>
+                        <p className="text-sm font-bold text-danger">-1.2%</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
           </div>
         </div>
+        
+        {/* Background decorative elements */}
         <div className="absolute right-0 top-0 z-[-1] opacity-30 lg:opacity-100">
           <svg
             width="450"
