@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 import dynamic from "next/dynamic";
 import { TrendingUpIcon, GlobeIcon, UserIcon } from "@/assets/icons";
-import { PieChart, Table } from "@/components/Layouts/sidebar/icons";
+import { PieChart } from "@/components/Layouts/sidebar/icons";
 
 const Hero = () => {
   useEffect(() => {
@@ -75,7 +75,7 @@ const Hero = () => {
                   
                   <div className="flex items-center gap-3 rounded-lg bg-white p-4 shadow-sm dark:bg-gray-800">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary/10">
-                      <Table className="h-5 w-5 text-secondary" />
+                      <TrendingUpIcon className="h-5 w-5 text-secondary" />
                     </div>
                     <div>
                       <h3 className="text-sm font-medium text-gray-900 dark:text-white">Smart Trading</h3>
