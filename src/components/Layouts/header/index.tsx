@@ -55,7 +55,7 @@ export function HeaderDashboard() {
         <div className="flex flex-row items-center gap-4 justify-center">
           <h3 className="text-xl md:text-2xl lg:text-3xl font-bold relative group">
             <span className="bg-gradient-to-r from-emerald-600 via-blue-500 to-emerald-600 bg-clip-text text-transparent tracking-tight">
-              Intuitive Capital
+              Freedom Tracker
             </span>
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-500 via-blue-500 to-emerald-500 group-hover:w-full transition-all duration-300"></span>
           </h3>

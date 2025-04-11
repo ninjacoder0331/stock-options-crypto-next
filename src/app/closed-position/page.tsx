@@ -34,7 +34,7 @@ const ClosedPositionPage = () => {
   }
 
   return (
-    <div className="p-4">
+    <div className="">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">Closed Positions</h1>
         <p className="text-sm text-gray-600 dark:text-gray-400">View your completed trades and their performance</p>

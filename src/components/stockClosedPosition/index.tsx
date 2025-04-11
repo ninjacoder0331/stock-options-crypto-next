@@ -24,6 +24,13 @@ const StockClosedPosition = () => {
   const [isLoading , setIsLoading] = useState<boolean>(false);
   const [rowsPerPage, setRowsPerPage] = useState<RowsPerPage>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const today = new Date().toISOString().split('T')[0];
+  const [startDate, setStartDate] = useState<string>(today);
+  const [endDate, setEndDate] = useState<string>(today);
+  const [totalProfitLoss, setTotalProfitLoss] = useState<number>(0);
+
+  
+
 
   useEffect(() => {
     setIsLoading(true);
@@ -43,6 +50,56 @@ const StockClosedPosition = () => {
     return <div>Loading...</div>
   }
 
+  const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newStartDate = e.target.value;
+    // Only update if the new start date is not after the end date
+    if (newStartDate <= endDate) {
+      setStartDate(newStartDate);
+      calculateTotalProfitLoss(newStartDate , endDate);
+    }
+  };
+
+  const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newEndDate = e.target.value;
+    // Only update if the new end date is not before the start date and not after today
+    if (newEndDate >= startDate && newEndDate <= today) {
+      setEndDate(newEndDate);
+      calculateTotalProfitLoss(startDate , newEndDate);
+    }
+  };
+
+  const calculateTotalProfitLoss = (startDate: string, endDate: string) => {
+    // Filter positions based on filled_at date
+    const filteredPositions = historyOrders.filter((position: any) => {
+      if (!position.filled_at) return false;
+      
+      const positionDate = new Date(position.filled_at);
+      // Create dates with time set to local midnight
+      const start = new Date(startDate + 'T00:00:00');
+      const end = new Date(endDate + 'T23:59:59');
+      
+      return positionDate >= start && positionDate <= end;
+    });
+
+    console.log("startDate", new Date(startDate + 'T00:00:00'));
+    console.log("endDate", new Date(endDate + 'T23:59:59'));
+    console.log("Filtered positions:", filteredPositions);
+
+    // Calculate total profit/loss
+    const total = filteredPositions.reduce((acc: number, position: any) => {
+      if (!position.filled_avg_price || !position.filled_qty) return acc;
+      
+      const value = position.side === 'buy' 
+        ? -(position.filled_avg_price * position.filled_qty) 
+        : (position.filled_avg_price * position.filled_qty);
+      
+      return acc + value;
+    }, 0);
+
+    setTotalProfitLoss(total);
+    console.log("total", total);
+  }
+
   // Calculate total pages
   const totalRows = historyOrders.length;
   const totalPages = Math.ceil(totalRows / rowsPerPage);
@@ -58,7 +115,7 @@ const StockClosedPosition = () => {
     <div>
 
       {/* Table Controls */}
-      <div className="mb-4.5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mb-4.5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between items-center">
         <div className="flex px-3 items-center gap-3">
           <label className="text-sm font-medium text-gray-600 dark:text-gray-400">
             Show rows:
@@ -112,6 +169,44 @@ const StockClosedPosition = () => {
           </button>
         </div>
       </div>
+
+      <div className='flex flex-col gap-4'>
+        {/* Date Range Selector */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-white rounded-xl shadow-1 dark:bg-gray-dark dark:shadow-card">
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full">
+            <div className="flex flex-col gap-1 w-full sm:w-auto">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Start Date</label>
+              <input 
+                type="date" 
+                value={startDate}
+                max={endDate}
+                onChange={handleStartDateChange}
+                className="rounded-lg border border-stroke bg-transparent px-3 py-2 text-sm font-medium outline-none transition-all focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+              />
+            </div>
+            <div className="flex flex-col gap-1 w-full sm:w-auto">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">End Date</label>
+              <input 
+                type="date" 
+                value={endDate}
+                min={startDate}
+                max={today}
+                onChange={handleEndDateChange}
+                className="rounded-lg border border-stroke bg-transparent px-3 py-2 text-sm font-medium outline-none transition-all focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+              />
+            </div>
+          </div>
+          
+          {/* Profit/Loss Summary */}
+          <div className="flex flex-col items-center justify-center p-4 rounded-lg bg-gray-50 dark:bg-gray-800 w-full sm:w-auto">
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-1">Total&nbsp;&nbsp;P/L</h3>
+            <p className={`text-xl font-bold ${totalProfitLoss >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+              {totalProfitLoss.toFixed(0)}
+            </p>
+          </div>
+        </div>
+      </div>
+
 
       <div className="overflow-x-auto p-6 rounded-xl bg-white shadow-1 dark:bg-gray-dark dark:shadow-card mt-3">
         <table className="w-full table-auto border-collapse">
