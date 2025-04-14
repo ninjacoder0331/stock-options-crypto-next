@@ -175,7 +175,7 @@ const OptionsClosedPosition = () => {
 
       <div className='flex flex-col gap-4'>
         {/* Date Range Selector */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-white rounded-xl shadow-1 dark:bg-gray-800 dark:shadow-card">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-2 bg-gray-50 rounded-xl shadow-1 dark:bg-gray-700 dark:shadow-card">
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full">
             <div className="flex flex-col gap-1 w-full sm:w-auto">
               <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Start Date</label>
@@ -210,7 +210,7 @@ const OptionsClosedPosition = () => {
         </div>
       </div>
 
-      <div className="overflow-x-auto p-6 rounded-xl bg-white shadow-1 dark:bg-gray-800 dark:shadow-card mt-3">
+      <div className="overflow-x-auto p-6 rounded-xl bg-white shadow-1 dark:bg-gray-800 dark:shadow-card">
         <table className="w-full table-auto border-collapse">
           <thead>
             <tr className="bg-primary/10 dark:bg-primary/5">
