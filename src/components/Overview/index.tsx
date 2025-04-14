@@ -4,6 +4,7 @@ import { useState , useEffect } from "react";
 import apiClient from "@/lib/axios";
 import AccountInfor from "../Stocktable/accountInfor";
 import Position from "./position";
+import { stockTickers } from '@/assets/data';
 import { BuySellOrder, ProfitLoss, TotalTransaction, TotalView, ViewIcon } from 'public/index';
 import ProfitChat from "../profitChart";
 import { toast } from "react-toastify";
@@ -24,6 +25,8 @@ const Overview = () => {
   const [quantity, setQuantity] = useState('');
   const [showConfirm, setShowConfirm] = useState(false);
   const [orderType, setOrderType] = useState<'buy' | 'sell' | null>(null);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const formatDate = (timestamp: number) => {
     return new Date(timestamp * 1000).toLocaleDateString();
@@ -62,7 +65,7 @@ const Overview = () => {
   }, [])
 
   const handleOrderClick = (type: 'buy' | 'sell') => {
-    if (symbol === '' || quantity === '') {
+    if (symbol === '' || parseInt(quantity) <= 0) {
       toast.error('Please enter a symbol and quantity');
       return;
     }
@@ -91,6 +94,27 @@ const Overview = () => {
 
   const handleReload = () => {
     window.location.reload();
+  };
+
+  const handleSymbolChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toUpperCase();
+    setSymbol(value);
+    
+    if (value.length > 0) {
+      const filtered = stockTickers.filter(ticker => 
+        ticker.startsWith(value)
+      ).slice(0, 5); // Show only top 5 matches
+      setSuggestions(filtered);
+      setShowSuggestions(true);
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  };
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setSymbol(suggestion);
+    setShowSuggestions(false);
   };
 
   if (isLoading) {
@@ -223,13 +247,31 @@ const Overview = () => {
               <div className='flex flex-col gap-3'>
                 {/* Input Fields */}
                 <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 w-full'>
-                  <input 
-                    type="text" 
-                    value={symbol}
-                    onChange={(e) => setSymbol(e.target.value)}
-                    placeholder="Enter the stock symbol" 
-                    className='w-full rounded-lg border border-stroke bg-transparent px-4 py-2.5 outline-none focus:border-primary dark:border-dark-3 dark:bg-dark-2'
-                  />
+                  <div className="relative">
+                    <input 
+                      type="text" 
+                      value={symbol}
+                      onChange={handleSymbolChange}
+                      onFocus={() => symbol.length > 0 && setShowSuggestions(true)}
+                      onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                      placeholder="Enter Stock Symbol"
+                      maxLength={5}
+                      className="w-full rounded-lg border border-stroke bg-transparent px-4 py-2.5 outline-none focus:border-primary dark:border-dark-3 dark:bg-dark-2"
+                    />
+                    {showSuggestions && suggestions.length > 0 && (
+                      <div className="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg">
+                        {suggestions.map((suggestion) => (
+                          <div
+                            key={suggestion}
+                            className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer text-sm font-mono"
+                            onClick={() => handleSuggestionClick(suggestion)}
+                          >
+                            {suggestion}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                   <input 
                     type="number" 
                     value={quantity}
@@ -299,11 +341,11 @@ const Overview = () => {
         {/* Confirmation Modal */}
         {showConfirm && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-white dark:bg-dark-2 rounded-lg p-6 max-w-sm w-full mx-4 shadow-xl">
-              <h3 className="text-lg font-semibold text-black dark:text-white mb-4">
+            <div className="bg-white dark:bg-dark-800 rounded-lg p-6 max-w-sm w-full mx-4 shadow-xl">
+              <h3 className="text-lg font-semibold text-black mb-4">
                 Confirm Order
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
+              <p className="text-gray-600  mb-6">
                 Are you sure you want to {orderType} {quantity} shares of {symbol}?
               </p>
               <div className="flex gap-3">
@@ -322,7 +364,7 @@ const Overview = () => {
                     setShowConfirm(false);
                     setOrderType(null);
                   }}
-                  className="flex-1 rounded-lg py-2.5 font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-dark-3 hover:bg-gray-200 dark:hover:bg-dark-4 transition-all duration-300"
+                  className="flex-1 rounded-lg py-2.5 font-medium text-gray-700  bg-gray-100 dark:bg-dark-3 hover:bg-gray-200  transition-all duration-300"
                 >
                   No
                 </button>

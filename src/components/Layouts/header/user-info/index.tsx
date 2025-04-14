@@ -171,38 +171,48 @@ export function UserInfo() {
       </DropdownContent>
     </Dropdown>
      {showPasswordModal && (
-      <div className="fixed inset-0 z-[9999] flex h-[50vh] items-center justify-center">
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowPasswordModal(false)}></div>
-        <div className="relative z-[10000] w-full max-w-md mx-4  transform rounded-lg bg-white p-6 shadow-xl dark:bg-gray-800">
-          <h2 className="mb-4 text-lg xs:text-xl font-semibold">Change Password</h2>
+      <div className="fixed inset-0 z-[9999] h-[50vh] flex items-center justify-center">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300" onClick={() => setShowPasswordModal(false)}></div>
+        <div className="relative z-[10000] w-full max-w-md mx-4 transform rounded-xl bg-white p-6 shadow-2xl dark:bg-gray-800 animate-fadeIn">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Change Password</h2>
+            <button 
+              onClick={() => setShowPasswordModal(false)}
+              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
           <div>
-            <div className="space-y-3 xs:space-y-4">
+            <div className="space-y-4">
               <div>
-                <label className="mb-2 block text-sm xs:text-base font-medium text-black dark:text-white">
+                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Current Password
                 </label>
                 <input
                   type="password"
                   placeholder="Enter current password"
-                  className="w-full rounded border border-stroke bg-transparent px-4 xs:px-5 py-2.5 xs:py-3 text-sm xs:text-base outline-none focus:border-primary dark:border-dark-3"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                   value={currentPassword}
                   onChange={(e)=>setCurrentPassword(e.target.value)}
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm xs:text-base font-medium text-black dark:text-white">
+                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                   New Password
                 </label>
                 <input
                   type="password"
                   placeholder="Enter new password"
-                  className="w-full rounded border border-stroke bg-transparent px-4 xs:px-5 py-2.5 xs:py-3 text-sm xs:text-base outline-none focus:border-primary dark:border-dark-3"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                   value={newPassword}
                   onChange={(e)=>setNewPassword(e.target.value)}
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm xs:text-base font-medium text-black dark:text-white">
+                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Confirm New Password
                 </label>
                 <input
@@ -210,20 +220,20 @@ export function UserInfo() {
                   placeholder="Confirm new password"
                   value={confirmPassword}
                   onChange={(e)=>setConfirmPassword(e.target.value)}
-                  className="w-full rounded border border-stroke bg-transparent px-4 xs:px-5 py-2.5 xs:py-3 text-sm xs:text-base outline-none focus:border-primary dark:border-dark-3"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
               </div>
-              <div className="flex justify-end gap-3 xs:gap-4">
+              <div className="flex justify-end gap-3 pt-2">
                 <button
                   type="button"
                   onClick={() => {setShowPasswordModal(false); setCurrentPassword(""); setNewPassword(""); setConfirmPassword(""); }}
-                  className="rounded bg-gray-2 px-4 xs:px-6 py-2 text-sm xs:text-base font-medium text-black hover:bg-gray-1 dark:bg-dark-3 dark:text-white dark:hover:bg-dark-2"
+                  className="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="button"
-                  className="rounded bg-primary px-4 xs:px-6 py-2 text-sm xs:text-base font-medium text-white hover:bg-primary/90"
+                  className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90 transition-colors"
                   onClick={()=>changePassword()}
                 >
                   Change Password
