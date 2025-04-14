@@ -16,7 +16,6 @@ const formatDateTime = (dateTimeString: string) => {
 
 type RowsPerPage = 5 | 10 | 15 | 20;
 
-
 const OpenStockPositions = ({ stockOpenPositions }: { stockOpenPositions  : any[] }) => {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -75,8 +74,6 @@ const OpenStockPositions = ({ stockOpenPositions }: { stockOpenPositions  : any[
   }, [stockOpenPositions]);
   return (
     <div>
-      
-
       <div className="mb-4.5 flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex px-3 items-center gap-3">
           <label className="text-sm font-medium text-gray-600 dark:text-gray-400">

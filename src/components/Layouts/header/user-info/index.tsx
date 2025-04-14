@@ -13,19 +13,60 @@ import { useState } from "react";
 import { LogOutIcon, SettingsIcon, UserIcon } from "./icons";
 import { useAuth } from "@/providers/AuthProvider";
 import cookie from "js-cookie";
-
+import { toast } from "react-toastify";
+import apiClient from "@/lib/axios";
 export function UserInfo() {
   const [isOpen, setIsOpen] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const { signout } = useAuth();
   const USER = {
     name: "Daniel",
     email: cookie.get("email"),
     img: "/images/user/user-03.png",
   };
-  
+
+  const changePassword = () => {
+    console.log("changePassword");
+    if (currentPassword === "" || newPassword === "" || confirmPassword === "") {
+      toast.error("Please enter all fields");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+    if (newPassword.length < 8) {
+      toast.error("Password must be at least 8 characters long");
+      return;
+    }
+    if (currentPassword === newPassword) {
+      toast.error("New password cannot be the same as the current password");
+      return;
+    }
+
+    const payload = {
+      currentPassword: currentPassword,
+      newPassword: newPassword,
+    }
+
+    const response = apiClient.post("/api/auth/changePassword", payload).then((res) => {
+      if (res.status === 200) {
+        toast.success("Password changed successfully");
+        setShowPasswordModal(false);
+      }
+      else {
+        toast.error("Password change failed");
+      }
+    });
+  };
+
 
   return (
+    <>
     <Dropdown isOpen={isOpen} setIsOpen={setIsOpen}>
       <DropdownTrigger className="rounded-full align-middle outline-none ring-primary ring-offset-2 focus-visible:ring-1 dark:ring-offset-gray-dark transition-all duration-200 hover:opacity-90">
         <span className="sr-only">My Account</span>
@@ -93,6 +134,7 @@ export function UserInfo() {
           <div
             onClick={() => {
               setShowPasswordModal(true);
+              setIsOpen(false);
             }}
             className="flex w-full items-center gap-2 xs:gap-2.5 rounded-lg px-2.5 xs:px-3 py-2 xs:py-2.5 transition-colors duration-200 hover:bg-gray-2 hover:text-dark dark:hover:bg-dark-3 dark:hover:text-white"
           >
@@ -102,66 +144,7 @@ export function UserInfo() {
             </span>
           </div>
 
-          {showPasswordModal && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-              <div className="w-full max-w-md rounded-lg bg-white p-4 xs:p-6 dark:bg-gray-dark">
-                <h2 className="mb-4 text-lg xs:text-xl font-semibold">Change Password</h2>
-                <form onSubmit={(e) => {
-                  e.preventDefault();
-                  // Add your password change logic here
-                  setShowPasswordModal(false);
-                }}>
-                  <div className="space-y-3 xs:space-y-4">
-                    <div>
-                      <label className="mb-2 block text-sm xs:text-base font-medium text-black dark:text-white">
-                        Current Password
-                      </label>
-                      <input
-                        type="password"
-                        placeholder="Enter current password"
-                        className="w-full rounded border border-stroke bg-transparent px-4 xs:px-5 py-2.5 xs:py-3 text-sm xs:text-base outline-none focus:border-primary dark:border-dark-3"
-                      />
-                    </div>
-                    <div>
-                      <label className="mb-2 block text-sm xs:text-base font-medium text-black dark:text-white">
-                        New Password
-                      </label>
-                      <input
-                        type="password"
-                        placeholder="Enter new password"
-                        className="w-full rounded border border-stroke bg-transparent px-4 xs:px-5 py-2.5 xs:py-3 text-sm xs:text-base outline-none focus:border-primary dark:border-dark-3"
-                      />
-                    </div>
-                    <div>
-                      <label className="mb-2 block text-sm xs:text-base font-medium text-black dark:text-white">
-                        Confirm New Password
-                      </label>
-                      <input
-                        type="password"
-                        placeholder="Confirm new password"
-                        className="w-full rounded border border-stroke bg-transparent px-4 xs:px-5 py-2.5 xs:py-3 text-sm xs:text-base outline-none focus:border-primary dark:border-dark-3"
-                      />
-                    </div>
-                    <div className="flex justify-end gap-3 xs:gap-4">
-                      <button
-                        type="button"
-                        onClick={() => setShowPasswordModal(false)}
-                        className="rounded bg-gray-2 px-4 xs:px-6 py-2 text-sm xs:text-base font-medium text-black hover:bg-gray-1 dark:bg-dark-3 dark:text-white dark:hover:bg-dark-2"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        className="rounded bg-primary px-4 xs:px-6 py-2 text-sm xs:text-base font-medium text-white hover:bg-primary/90"
-                      >
-                        Change Password
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          )}
+         
 
         </div>
 
@@ -178,5 +161,70 @@ export function UserInfo() {
         </div>
       </DropdownContent>
     </Dropdown>
+     {showPasswordModal && (
+      <div className="fixed inset-0 z-[9999] flex h-[50vh] items-center justify-center">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowPasswordModal(false)}></div>
+        <div className="relative z-[10000] w-full max-w-md mx-4  transform rounded-lg bg-white p-6 shadow-xl dark:bg-gray-dark">
+          <h2 className="mb-4 text-lg xs:text-xl font-semibold">Change Password</h2>
+          <div>
+            <div className="space-y-3 xs:space-y-4">
+              <div>
+                <label className="mb-2 block text-sm xs:text-base font-medium text-black dark:text-white">
+                  Current Password
+                </label>
+                <input
+                  type="password"
+                  placeholder="Enter current password"
+                  className="w-full rounded border border-stroke bg-transparent px-4 xs:px-5 py-2.5 xs:py-3 text-sm xs:text-base outline-none focus:border-primary dark:border-dark-3"
+                  value={currentPassword}
+                  onChange={(e)=>setCurrentPassword(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="mb-2 block text-sm xs:text-base font-medium text-black dark:text-white">
+                  New Password
+                </label>
+                <input
+                  type="password"
+                  placeholder="Enter new password"
+                  className="w-full rounded border border-stroke bg-transparent px-4 xs:px-5 py-2.5 xs:py-3 text-sm xs:text-base outline-none focus:border-primary dark:border-dark-3"
+                  value={newPassword}
+                  onChange={(e)=>setNewPassword(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="mb-2 block text-sm xs:text-base font-medium text-black dark:text-white">
+                  Confirm New Password
+                </label>
+                <input
+                  type="password"
+                  placeholder="Confirm new password"
+                  value={confirmPassword}
+                  onChange={(e)=>setConfirmPassword(e.target.value)}
+                  className="w-full rounded border border-stroke bg-transparent px-4 xs:px-5 py-2.5 xs:py-3 text-sm xs:text-base outline-none focus:border-primary dark:border-dark-3"
+                />
+              </div>
+              <div className="flex justify-end gap-3 xs:gap-4">
+                <button
+                  type="button"
+                  onClick={() => setShowPasswordModal(false)}
+                  className="rounded bg-gray-2 px-4 xs:px-6 py-2 text-sm xs:text-base font-medium text-black hover:bg-gray-1 dark:bg-dark-3 dark:text-white dark:hover:bg-dark-2"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="rounded bg-primary px-4 xs:px-6 py-2 text-sm xs:text-base font-medium text-white hover:bg-primary/90"
+                  onClick={()=>changePassword()}
+                >
+                  Change Password
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+    </>
   );
 }
