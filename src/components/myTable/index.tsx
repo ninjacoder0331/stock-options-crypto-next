@@ -75,7 +75,7 @@ const TraderTable = () => {
   return (
     <div className="container ">
       <div className="relative  shadow-md sm:rounded-lg">
-      <table className=" table-auto border-collapse bg-white shadow-1 dark:bg-gray-dark dark:shadow-card  ">
+      <table className=" table-auto border-collapse bg-white shadow-1 dark:bg-gray-800 dark:shadow-card  ">
         <thead>
           <tr className="bg-primary/10 dark:bg-primary/5">
             <th className="whitespace-nowrap px-4 py-3 text-left text-sm font-semibold text-gray-800 dark:text-gray-200">

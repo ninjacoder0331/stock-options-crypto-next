@@ -2,7 +2,7 @@ import React from "react"
 
 const Anlystics = () => {
     return (
-        <div className="overflow-x-auto rounded-lg bg-white p-6 shadow-1 dark:bg-gray-dark w-full" >
+        <div className="overflow-x-auto rounded-lg bg-white p-6 shadow-1 dark:bg-gray-800 w-full" >
           <table className="w-full table-auto border-collapse">
             <thead>
               <tr className="bg-primary/10 dark:bg-primary/5">

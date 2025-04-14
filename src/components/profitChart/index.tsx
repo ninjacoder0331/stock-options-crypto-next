@@ -28,7 +28,7 @@ const ProfitChat = ({ portfolioHistory }: { portfolioHistory: any }) => {
   const maxValue = Math.max(...weeklyData.map(d => Math.abs(d.profit)));
 
   return (
-    <div className="rounded-sm border-stroke bg-white p-4 shadow-default shadow-default shadow-1 dark:bg-gray-dark dark:shadow-card">
+    <div className="rounded-sm border-stroke bg-white p-4 shadow-default shadow-default shadow-1 dark:bg-gray-800 dark:shadow-card">
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <h3 className="text-xl font-semibold text-black dark:text-white">
@@ -39,10 +39,10 @@ const ProfitChat = ({ portfolioHistory }: { portfolioHistory: any }) => {
           onChange={(e) => setSelectedWeeks(Number(e.target.value))}
           className="rounded-lg border border-stroke bg-transparent px-3 py-2 text-sm font-medium outline-none transition-all focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white"
         >
-          <option value={1} className='dark:text-white dark:bg-gray-dark '>Current Week</option>
-          <option value={2} className='dark:text-white dark:bg-gray-dark '>Last 2 Weeks</option>
-          <option value={3} className='dark:text-white dark:bg-gray-dark '>Last 3 Weeks</option>
-          <option value={100} className='dark:text-white dark:bg-gray-dark '>All Time</option>
+          <option value={1} className='dark:text-white dark:bg-gray-800 '>Current Week</option>
+          <option value={2} className='dark:text-white dark:bg-gray-800 '>Last 2 Weeks</option>
+          <option value={3} className='dark:text-white dark:bg-gray-800 '>Last 3 Weeks</option>
+          <option value={100} className='dark:text-white dark:bg-gray-800 '>All Time</option>
         </select>
       </div>
 

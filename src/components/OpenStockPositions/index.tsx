@@ -87,10 +87,10 @@ const OpenStockPositions = ({ stockOpenPositions }: { stockOpenPositions  : any[
             }}
             className="rounded-lg border border-stroke bg-transparent px-3 py-2 text-sm font-medium outline-none transition-all focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white [&>option]:dark:bg-dark-2"
           >
-            <option value={5} className="dark:text-white dark:bg-gray-dark">5 rows</option>
-            <option value={10} className="dark:text-white dark:bg-gray-dark">10 rows</option>
-            <option value={15} className="dark:text-white dark:bg-gray-dark">15 rows</option>
-            <option value={20} className="dark:text-white dark:bg-gray-dark">20 rows</option>
+            <option value={5} className="dark:text-white dark:bg-gray-800">5 rows</option>
+            <option value={10} className="dark:text-white dark:bg-gray-800">10 rows</option>
+            <option value={15} className="dark:text-white dark:bg-gray-800">15 rows</option>
+            <option value={20} className="dark:text-white dark:bg-gray-800">20 rows</option>
           </select>
         </div>
 
@@ -128,7 +128,7 @@ const OpenStockPositions = ({ stockOpenPositions }: { stockOpenPositions  : any[
         </div>
       </div>
 
-      <div className="overflow-x-auto p-6 rounded-xl bg-white shadow-1 dark:bg-gray-dark dark:shadow-card mt-3">
+      <div className="overflow-x-auto p-6 rounded-xl bg-white shadow-1 dark:bg-gray-800 dark:shadow-card mt-3">
         <table className="w-full table-auto border-collapse">
           <thead>
             <tr className="bg-primary/10 dark:bg-primary/5">
@@ -189,10 +189,10 @@ const OpenStockPositions = ({ stockOpenPositions }: { stockOpenPositions  : any[
                   {order.qty}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {order.current_price}
+                  {Number(order.current_price).toFixed(2)}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {order.avg_entry_price}
+                  {Number(order.avg_entry_price).toFixed(2)}
                 </td>
                 <td className={`px-4 py-3 text-sm ${
                   order.unrealized_intraday_plpc >= 0 

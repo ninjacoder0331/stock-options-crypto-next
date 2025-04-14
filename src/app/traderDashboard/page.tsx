@@ -35,14 +35,14 @@ const TraderDashboard = () => {
     <div className="flex flex-col gap-4">
       <div className="flex flex-row gap-4 justify-between" key={1}>
           {analysts.map((analyst) => (
-            <div key={analyst.id}  className="p-6 rounded-xl bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
+            <div key={analyst.id}  className="p-6 rounded-xl bg-white shadow-1 dark:bg-gray-800 dark:shadow-card">
               <Analyst analyst={analyst} />
             </div>
           ))}
       </div>
 
       
-      <div className="rounded-lg bg-white p-6 shadow-1 dark:bg-gray-dark" key={2}>
+      <div className="rounded-lg bg-white p-6 shadow-1 dark:bg-gray-800" key={2}>
         <OpenPosition/>
       </div>
 

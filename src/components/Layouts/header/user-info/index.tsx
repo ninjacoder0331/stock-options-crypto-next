@@ -15,6 +15,8 @@ import { useAuth } from "@/providers/AuthProvider";
 import cookie from "js-cookie";
 import { toast } from "react-toastify";
 import apiClient from "@/lib/axios";
+
+
 export function UserInfo() {
   const [isOpen, setIsOpen] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
@@ -35,20 +37,24 @@ export function UserInfo() {
       toast.error("Please enter all fields");
       return;
     }
+
     if (newPassword !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
     }
+
     if (newPassword.length < 8) {
       toast.error("Password must be at least 8 characters long");
       return;
     }
+
     if (currentPassword === newPassword) {
       toast.error("New password cannot be the same as the current password");
       return;
     }
 
     const payload = {
+      email : cookie.get("email"),
       currentPassword: currentPassword,
       newPassword: newPassword,
     }
@@ -57,6 +63,9 @@ export function UserInfo() {
       if (res.status === 200) {
         toast.success("Password changed successfully");
         setShowPasswordModal(false);
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
       }
       else {
         toast.error("Password change failed");
@@ -99,7 +108,7 @@ export function UserInfo() {
       </DropdownTrigger>
 
       <DropdownContent
-        className="border border-stroke bg-white shadow-lg dark:border-dark-3 dark:bg-gray-dark w-[calc(100vw-2rem)] xs:w-[17.5rem] rounded-xl overflow-hidden"
+        className="border border-stroke bg-white shadow-lg dark:border-dark-3 dark:bg-gray-800 w-[calc(100vw-2rem)] xs:w-[17.5rem] rounded-xl overflow-hidden"
         align="end"
       >
         <h2 className="sr-only">User information</h2>
@@ -164,7 +173,7 @@ export function UserInfo() {
      {showPasswordModal && (
       <div className="fixed inset-0 z-[9999] flex h-[50vh] items-center justify-center">
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowPasswordModal(false)}></div>
-        <div className="relative z-[10000] w-full max-w-md mx-4  transform rounded-lg bg-white p-6 shadow-xl dark:bg-gray-dark">
+        <div className="relative z-[10000] w-full max-w-md mx-4  transform rounded-lg bg-white p-6 shadow-xl dark:bg-gray-800">
           <h2 className="mb-4 text-lg xs:text-xl font-semibold">Change Password</h2>
           <div>
             <div className="space-y-3 xs:space-y-4">
@@ -207,7 +216,7 @@ export function UserInfo() {
               <div className="flex justify-end gap-3 xs:gap-4">
                 <button
                   type="button"
-                  onClick={() => setShowPasswordModal(false)}
+                  onClick={() => {setShowPasswordModal(false); setCurrentPassword(""); setNewPassword(""); setConfirmPassword(""); }}
                   className="rounded bg-gray-2 px-4 xs:px-6 py-2 text-sm xs:text-base font-medium text-black hover:bg-gray-1 dark:bg-dark-3 dark:text-white dark:hover:bg-dark-2"
                 >
                   Cancel

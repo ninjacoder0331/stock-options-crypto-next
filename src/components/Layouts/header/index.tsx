@@ -33,7 +33,7 @@ export function HeaderDashboard() {
   }, [pathname]);
 
   return (  
-    <header className="sticky top-0 z-30 flex items-center justify-between border-b border-stroke/50 bg-white/95 dark:bg-gray-dark/95 backdrop-blur-md px-4 py-3.5 shadow-sm dark:border-stroke-dark/50 md:px-6 2xl:px-8">
+    <header className="sticky top-0 z-30 flex items-center justify-between border-b border-stroke/50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md px-4 py-3.5 shadow-sm dark:border-stroke-dark/50 md:px-6 2xl:px-8">
       <div className="flex items-center gap-4">
         <button 
           onClick={() => setIsMenuOpen(!isMenuOpen)}

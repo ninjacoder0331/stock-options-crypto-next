@@ -14,7 +14,7 @@ export async function WeeksProfit({ className, timeFrame }: PropsType) {
   return (
     <div
       className={cn(
-        "rounded-[10px] bg-white px-7.5 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card",
+        "rounded-[10px] bg-white px-7.5 pt-7.5 shadow-1 dark:bg-gray-800 dark:shadow-card",
         className,
       )}
     >

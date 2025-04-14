@@ -43,7 +43,7 @@ const Header = () => {
       <header
         className={`header left-0 top-0 z-40 flex w-full py-4 items-center ${
           sticky
-            ? "dark:bg-gray-dark dark:shadow-sticky-dark fixed z-[9999] bg-white !bg-opacity-80 shadow-sticky backdrop-blur-sm transition"
+            ? "dark:bg-gray-800 dark:shadow-sticky-dark fixed z-[9999] bg-white !bg-opacity-80 shadow-sticky backdrop-blur-sm transition"
             : "absolute bg-transparent"
         }`}
       >
@@ -138,7 +138,7 @@ const Header = () => {
           <div
             className={`md:hidden ${
               navbarOpen
-                ? "block absolute top-full left-0 w-full bg-white dark:bg-gray-dark shadow-lg py-4 px-4 mt-2 rounded-lg"
+                ? "block absolute top-full left-0 w-full bg-white dark:bg-gray-800 shadow-lg py-4 px-4 mt-2 rounded-lg"
                 : "hidden"
             }`}
           >

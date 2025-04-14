@@ -1,6 +1,6 @@
 const Position = ({positions}: {positions: any}) => {
   return(
-    <div className="overflow-x-auto md:w-1/2 w-full p-6 rounded-xl bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
+    <div className="overflow-x-auto md:w-1/2 w-full p-6 rounded-xl bg-white shadow-1 dark:bg-gray-800 dark:shadow-card">
       <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200">My Assets</h2>
       <table className="w-full table-auto border-collapse">
         <thead>

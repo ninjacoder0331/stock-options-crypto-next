@@ -133,7 +133,7 @@ const BrokerageSetup = () => {
     return (
       <div className="space-y-6">
         {/* Add Brokerage Form */}
-        <div className="rounded-lg bg-white p-6 shadow-1 dark:bg-gray-dark">
+        <div className="rounded-lg bg-white p-6 shadow-1 dark:bg-gray-800">
           <h2 className="mb-4 text-xl font-semibold text-gray-800 dark:text-white">Add New Brokerage</h2>
           <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="space-y-2">
@@ -264,7 +264,7 @@ const BrokerageSetup = () => {
           </form>
         </div>
 
-        <div className="overflow-x-auto rounded-lg bg-white p-6 shadow-1 dark:bg-gray-dark w-full" >
+        <div className="overflow-x-auto rounded-lg bg-white p-6 shadow-1 dark:bg-gray-800 w-full" >
           <BrokerageTable data = {brokerage} setIsLoaded = {setIsLoaded} />
         </div>
       </div>

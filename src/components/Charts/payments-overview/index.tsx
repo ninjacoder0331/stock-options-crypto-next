@@ -18,7 +18,7 @@ export async function PaymentsOverview({
   return (
     <div
       className={cn(
-        "grid gap-2 rounded-[10px] bg-white px-7.5 pb-6 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card",
+        "grid gap-2 rounded-[10px] bg-white px-7.5 pb-6 pt-7.5 shadow-1 dark:bg-gray-800 dark:shadow-card",
         className,
       )}
     >

@@ -51,12 +51,10 @@ const Overview = () => {
       setPortfolioHistory(res.data.portfolio_history);
       setPositions(res.data.positions);
       setOrders(res.data.orders);
-
       setBuyOrders(res.data.buyOrders)
       setSellOrders(res.data.sellOrders)
       setTotalBuyNumber(res.data.buyAmount)
       setTotalSellNumber(res.data.sellAmount)
-
       setIsLoading(false);
       console.log(res.data);
     })
@@ -134,7 +132,7 @@ const Overview = () => {
               <TotalView />
             </div> */}
             {/* Profit/Loss Card */}
-            <div className='flex flex-col gap-4 rounded-sm  border-stroke bg-white p-5 shadow-default shadow-1 dark:bg-gray-dark dark:shadow-card'>
+            <div className='flex flex-col gap-4 rounded-sm  border-stroke bg-white p-5 shadow-default shadow-1 dark:bg-gray-800 dark:shadow-card'>
               {/* Chart */}
               <div className='flex-grow'>
                 <ProfitLoss/>
@@ -177,7 +175,7 @@ const Overview = () => {
             </div>
 
             {/* Transactions Card */}
-            <div className='flex flex-col gap-4 rounded-sm border-stroke bg-white p-5 shadow-default shadow-1 dark:bg-gray-dark dark:shadow-card'>
+            <div className='flex flex-col gap-4 rounded-sm border-stroke bg-white p-5 shadow-default shadow-1 dark:bg-gray-800 dark:shadow-card'>
               {/* Chart */}
               <div className='flex-grow'>
                 <TotalTransaction/>
@@ -214,7 +212,7 @@ const Overview = () => {
 
             </div>
 
-            <div className='flex flex-col gap-4 rounded-sm border-stroke bg-white p-5 shadow-default shadow-1 dark:bg-gray-dark dark:shadow-card'>
+            <div className='flex flex-col gap-4 rounded-sm border-stroke bg-white p-5 shadow-default shadow-1 dark:bg-gray-800 dark:shadow-card'>
               {/* Title */}
               <span className='text-lg font-semibold text-black dark:text-white'>
                 <BuySellOrder />
