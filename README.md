@@ -40,6 +40,14 @@ The **Alpaca Option Trading Frontend** is a streamlined, intuitive web interface
 - Alpaca account with API key and secret (paper trading or live)
 - Basic knowledge of options trading concepts
 
+### Package Installation
+
+To install the Alpaca Trading API client, run the following command in your project directory:
+
+```bash
+npm install --save @alpacahq/alpaca-trade-api
+```
+
 ### Sign Up for Alpaca
 
 - Create a free Alpaca account: https://alpaca.markets/signup
