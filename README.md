@@ -21,13 +21,13 @@ The **Alpaca Option Trading Frontend** is a streamlined, intuitive web interface
 
 ## Features
 
-- Connects securely to Alpaca’s Trading API for options trading.
+- Secure connection to Alpaca’s Trading API for options trading.
 - View and filter options contracts by symbol, expiration date, strike price, and option type.
-- Place single-leg orders (calls and puts) and multi-leg strategies (straddles, spreads, iron condors, etc.).
+- Place single-leg orders (calls and puts) and multi-leg strategies such as straddles, spreads, and iron condors.
 - Real-time updates on orders, positions, and account details.
-- Manage options positions: open, close, and monitor.
-- Supports paper trading environment for risk-free testing.
-- Responsive and interactive UI for ease of use.
+- Manage options positions including opening, closing, and monitoring.
+- Support for paper trading environment to enable risk-free strategy testing.
+- Responsive and interactive user interface for enhanced usability.
 
 ---
 
