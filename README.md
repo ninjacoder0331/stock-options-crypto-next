@@ -47,13 +47,7 @@ To install the Alpaca Trading API client, run the following command in your proj
 ```bash
 npm install --save @alpacahq/alpaca-trade-api
 ```
-
-### Sign Up for Alpaca
-
-- Create a free Alpaca account: https://alpaca.markets/signup
-- Apply for options trading access and set your trading level.
-- Obtain your API key and secret from the Alpaca dashboard.
-
+al
 ---
 
 ## Installation
