@@ -47,10 +47,4 @@ To install the Alpaca Trading API client, run the following command in your proj
 ```bash
 npm install --save @alpacahq/alpaca-trade-api
 ```
-al
 ---
-
-## Installation
-
-Clone the repository and install dependencies:
-
