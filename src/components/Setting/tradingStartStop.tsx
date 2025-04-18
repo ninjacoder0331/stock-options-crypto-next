@@ -42,9 +42,6 @@ const TradingStartStop = () => {
     })
   }
 
-  useEffect(() => {
-    bringSettingValue()
-  }, [])
 
   if (isLoading) {
     return (

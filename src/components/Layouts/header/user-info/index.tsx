@@ -170,6 +170,7 @@ export function UserInfo() {
         </div>
       </DropdownContent>
     </Dropdown>
+    
      {showPasswordModal && (
       <div className="fixed inset-0 z-[9999] h-[50vh] flex items-center justify-center">
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300" onClick={() => setShowPasswordModal(false)}></div>

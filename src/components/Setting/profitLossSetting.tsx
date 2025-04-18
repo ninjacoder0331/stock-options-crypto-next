@@ -3,32 +3,32 @@ import { useState , useEffect } from "react"
 import apiClient from "@/lib/axios"
 import { toast } from "react-toastify"
 
-const AmountSetting = () => {
+const ProfitLossSetting = () => {
 
   const [isLoading, setIsLoading] = useState(true)
-  const [stockAmountLabel, setStockAmountLabel] = useState("")
-  const [optionAmountLabel, setOptionAmountLabel] = useState("")
-  const [stockAmount, setStockAmount] = useState("")
-  const [optionAmount, setOptionAmount] = useState("")
+  const [profitLabel, setProfitLabel] = useState("")
+  const [lossLabel, setLossLabel] = useState("")
+  const [profit, setProfit] = useState("")
+  const [loss, setLoss] = useState("")
 
   const bringSettingValue = async () => {
     setIsLoading(true)
     const response = apiClient.get("/getSettings").then((res) => {
       console.log(res)
-      setStockAmountLabel(res.data.stockAmount)
-      setOptionAmountLabel(res.data.optionsAmount)
+      setProfitLabel(res.data.profitPercent)
+      setLossLabel(res.data.lossPercent)
       setIsLoading(false)
     })
   }
 
   const saveSettings = async () => {
-    if (stockAmount === "" || optionAmount === "") {
+    if (profit === "" || loss === "") {
       toast.error("Please enter a valid amount")
       return
     }
-    const response = apiClient.post("/saveSettings", {
-      stockAmount: stockAmount,
-      optionsAmount: optionAmount
+    const response = apiClient.post("/saveProfitLossSettings", {
+      profitPercent: profit,
+      lossPercent: loss
     }).then((res) => {
       if (res.status === 200) { 
         bringSettingValue()
@@ -41,20 +41,21 @@ const AmountSetting = () => {
     bringSettingValue()
   }, [])
 
+
     return (
       <div className='flex flex-col w-full gap-6 rounded-xl border border-gray-200 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-800'>
       <div className='flex flex-col gap-4'>
-        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Trading Limits</h3>
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Profit/Loss Settings</h3>
         
         {/* Current Settings Display */}
         <div className='grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg'>
           <div className="flex flex-col gap-1">
-            <span className="text-xs text-gray-500 dark:text-gray-400">Stock Amount</span>
-            <span className="text-sm font-medium text-green-500 dark:text-green-500">{stockAmountLabel}</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">Profit</span>
+            <span className="text-sm font-medium text-green-500 dark:text-green-500">{profitLabel}%</span>
           </div>
           <div className="flex flex-col gap-1">
-            <span className="text-xs text-gray-500 dark:text-gray-400">Options Amount</span>
-            <span className="text-sm font-medium text-green-500 dark:text-green-500">{optionAmountLabel}</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">Loss</span>
+            <span className="text-sm font-medium text-green-500 dark:text-red-500">{lossLabel}%</span>
           </div>
         </div>
       </div>
@@ -62,36 +63,36 @@ const AmountSetting = () => {
       <div className='space-y-4'>
         {/* Stock Input */}
         <div className='flex flex-col sm:flex-row sm:items-center gap-3'>
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-300 w-24">Stock</label>
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-300 w-24">Profit</label>
           <div className="relative flex-1">
             <input 
               type="number" 
-              value={stockAmount} 
-              onChange={(e) => setStockAmount(e.target.value)}
+              value={profit} 
+              onChange={(e) => setProfit(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg
                        bg-white dark:bg-gray-700 text-gray-900 dark:text-white
                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
                        transition duration-200 ease-in-out
                        text-sm"
-              placeholder="Enter stock limit"
+              placeholder="Enter profit limit"
             />
           </div>
         </div>
 
         {/* Options Input */}
         <div className='flex flex-col sm:flex-row sm:items-center gap-3'>
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-300 w-24">Options</label>
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-300 w-24">Loss</label>
           <div className="relative flex-1">
             <input 
               type="number" 
-              value={optionAmount} 
-              onChange={(e) => setOptionAmount(e.target.value)}
+              value={loss} 
+              onChange={(e) => setLoss(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg
                        bg-white dark:bg-gray-700 text-gray-900 dark:text-white
                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
                        transition duration-200 ease-in-out
                        text-sm"
-              placeholder="Enter options limit"
+              placeholder="Enter loss limit"
             />
           </div>
         </div>
@@ -102,8 +103,8 @@ const AmountSetting = () => {
           className='bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow-sm
                    transition-all duration-200 flex items-center justify-center gap-2'
           onClick={() => {
-            setStockAmount("")
-            setOptionAmount("")
+            setProfit("")
+            setLoss("")
           }}
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -126,4 +127,4 @@ const AmountSetting = () => {
     )
 }
 
-export default AmountSetting;
+export default ProfitLossSetting;

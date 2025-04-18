@@ -2,7 +2,7 @@
 
 import AmountSetting from '@/components/Setting/amountSetting'
 import TradingStartStop from '@/components/Setting/tradingStartStop'
-
+import ProfitLossSetting from '@/components/Setting/profitLossSetting'
 const SettingsPage = () => {
 
   
@@ -26,8 +26,10 @@ const SettingsPage = () => {
           </div>
           
           <div className='flex flex-col gap-4'>
-            
-            <AmountSetting />
+            <div className='flex flex-col w-full lg:flex-row gap-4 '>
+              <AmountSetting />
+              <ProfitLossSetting />
+            </div>
 
             <TradingStartStop />
 

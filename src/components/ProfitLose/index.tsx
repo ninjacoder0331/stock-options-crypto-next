@@ -1,123 +1,27 @@
 'use client'
-
-import TitleLine from '@/components/TitleLine';
-import apiClient from '@/lib/axios';
-import { useState , useEffect } from 'react';
-
-const formatDateTime = (dateTimeString: string) => {
-  const date = new Date(dateTimeString);
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-  const year = date.getFullYear();
-  const hours = date.getHours() % 12 || 12;
-  const minutes = date.getMinutes().toString().padStart(2, '0');
-  const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
-  
-  return `${month}/${day}/${year} ${hours}:${minutes} ${ampm}`;
-};
+import { useEffect , useState } from "react";
 
 type RowsPerPage = 5 | 10 | 15 | 20;
 
-const OptionsClosedPosition = () => {
+const ProfitLose = ({data}:{data:any}) => {
 
-  const [openPositions, setOpenPositions] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
-  
-  // Get today's date in YYYY-MM-DD format
-  const today = new Date().toISOString().split('T')[0];
-  
-  // Initialize with today's date
-  const [startDate, setStartDate] = useState(today);
-  const [endDate, setEndDate] = useState(today);
-  const [totalProfitLoss, setTotalProfitLoss] = useState(0);
-  const [portfolioHistory, setPortfolioHistory] = useState([]);
+  const [rowsPerPage, setRowsPerPage] = useState<RowsPerPage>(10);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  // Handle date changes with validation
-  const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newStartDate = e.target.value;
-    // Only update if the new start date is not after the end date
-    if (newStartDate <= endDate) {
-      setStartDate(newStartDate);
-      calculateTotalProfitLoss(newStartDate , endDate);
-    }
+  // Calculate total pages
+  const totalRows = data.length;
+  const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+  // Get current page data
+  const getCurrentPageData = () => {
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    return data.slice(startIndex, endIndex);
   };
-
-  const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newEndDate = e.target.value;
-    // Only update if the new end date is not before the start date and not after today
-    if (newEndDate >= startDate && newEndDate <= today) {
-      setEndDate(newEndDate);
-      calculateTotalProfitLoss(startDate , newEndDate);
-    }
-  };
-
-  const calculateTotalProfitLoss = (startDate: string, endDate: string) => {
-    // Filter positions based on filled_at date
-    const filteredPositions = openPositions.filter((position: any) => {
-      if (!position.filled_at) return false;
-      
-      const positionDate = new Date(position.filled_at);
-      // Create dates with time set to local midnight
-      const start = new Date(startDate + 'T00:00:00');
-      const end = new Date(endDate + 'T23:59:59');
-      
-      return positionDate >= start && positionDate <= end;
-    });
-
-    console.log("startDate", new Date(startDate + 'T00:00:00'));
-    console.log("endDate", new Date(endDate + 'T23:59:59'));
-    console.log("Filtered positions:", filteredPositions);
-
-    // Calculate total profit/loss
-    const total = filteredPositions.reduce((acc: number, position: any) => {
-      if (!position.filled_avg_price || !position.filled_qty) return acc;
-      
-      const value = position.side === 'buy' 
-        ? -(position.filled_avg_price * position.filled_qty * 100) 
-        : (position.filled_avg_price * position.filled_qty * 100);
-      
-      return acc + value;
-    }, 0);
-
-    setTotalProfitLoss(total);
-    console.log("total", total);
-  }
-
-  useEffect(() => {
-    const result = apiClient.get("/api/trader/closedpositions")
-    .then((res) => {
-      console.log(res.data);
-      setOpenPositions(res.data.orders);
-      setPortfolioHistory(res.data.portfolio_history);
-      setIsLoading(false);
-    })
-    .catch((err) => {
-      console.log(err);
-      setIsLoading(false);
-    })
-  }, []);
-
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
-
-    // Calculate total pages
-    const totalRows = openPositions.length;
-    const totalPages = Math.ceil(totalRows / rowsPerPage);
-
-    // Get current page data
-    const getCurrentPageData = () => {
-      const startIndex = (currentPage - 1) * rowsPerPage;
-      const endIndex = startIndex + rowsPerPage;
-      return openPositions.slice(startIndex, endIndex);
-    };
-
+  
+  
     return (
-        <div>
-          
-          {/* Table Controls */}
+    <div className="overflow-x-auto p-6 rounded-xl bg-white shadow-1 dark:bg-gray-800 dark:shadow-card mt-3">
       <div className="mb-4.5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between items-center">
         <div className="flex px-3 items-center gap-3">
           <label className="text-sm font-medium text-gray-600 dark:text-gray-400">
@@ -140,7 +44,7 @@ const OptionsClosedPosition = () => {
 
         <div className="flex flex-col items-center justify-center gap-1 mb-4">
           <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-[#4B70E2] bg-clip-text text-transparent">
-            Options Closed Positions
+            Stock Profit/Loss
           </h2>
           <div className="h-1 w-20 bg-gradient-to-r from-primary to-[#4B70E2] rounded-full"></div>
         </div>
@@ -173,9 +77,7 @@ const OptionsClosedPosition = () => {
         </div>
       </div>
 
-     
-
-      <div className="overflow-x-auto p-6 rounded-xl bg-white shadow-1 dark:bg-gray-800 dark:shadow-card">
+      <div className="overflow-x-auto p-6 rounded-xl bg-white shadow-1 dark:bg-gray-800 dark:shadow-card mt-3">
         <table className="w-full table-auto border-collapse">
           <thead>
             <tr className="bg-primary/10 dark:bg-primary/5">
@@ -183,38 +85,37 @@ const OptionsClosedPosition = () => {
                 No
               </th>
               <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
-                Asset
+                Ticker
               </th>
               <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
                 Order Type
               </th>
               <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
-                Side
-              </th>
-              <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
-                Status
-              </th>
-              <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
                 Qty
               </th>
               <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
-                Filled Qty
-              </th>
-              <th className='whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200'>
-                Total Amount
+                Entry Price
               </th>
               <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
-                Submitted At
+                Exit Price
               </th>
               <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
-                Filled At
+                Entry Date
+              </th>
+              <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
+                Exit Date
+              </th>
+              <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
+                P/L
+              </th>
+              <th className="whitespace-nowrap px-4 py-3 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">
+                Total P/L
               </th>
             </tr>
           </thead>
 
           <tbody>
             {getCurrentPageData().map((order: any, index: number) => (
-              order.asset_class === "us_option" ? (
               <tr key={order.id} className="border-b border-gray-200 text-center hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800">
                 <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
                   {(currentPage - 1) * rowsPerPage + index + 1}
@@ -223,44 +124,46 @@ const OptionsClosedPosition = () => {
                   {order.symbol}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {order.order_type}
+                  {order.tradingType}
                 </td>
                 <td className={`px-4 py-3 text-sm ${
-                  order.side === 'buy' 
+                  'text-green-600 dark:text-green-400' 
+                }`}>
+                  {order.quantity}
+                </td>
+                <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
+                  ${Number(order.entryPrice).toFixed(2)}
+                </td>
+                <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
+                  ${Number(order.exitPrice).toFixed(2)}
+                </td>
+                <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
+                  {order.entryTimestamp}
+                </td>
+                <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
+                  {order.exitTimestamp}
+                </td>
+                <td className={`px-4 py-3 text-sm ${
+                  order.exitPrice - order.entryPrice >= 0 
                     ? 'text-green-600 dark:text-green-400' 
                     : 'text-red-600 dark:text-red-400'
                 }`}>
-                  {order.side}
-                </td>
-                <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {order.status}
-                </td>
-                <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {order.qty}
-                </td>
-                <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {order.filled_qty}
+                  {(order.exitPrice - order.entryPrice < 0 ? '-' : '')}${Math.abs(Number(order.exitPrice - order.entryPrice)).toFixed(2)}
                 </td>
                 <td className={`px-4 py-3 text-sm ${
-                  order.side === 'buy' 
-                    ? 'text-red-600 dark:text-red-400' 
-                    : 'text-green-600 dark:text-green-400'
+                  (order.exitPrice - order.entryPrice) * order.quantity >= 0 
+                    ? 'text-green-600 dark:text-green-400' 
+                    : 'text-red-600 dark:text-red-400'
                 }`}>
-                  {order.side === 'buy' ? -(order.filled_avg_price * order.filled_qty * 100).toFixed(0) : (order.filled_avg_price * order.filled_qty * 100).toFixed(0)}
+                  {((order.exitPrice - order.entryPrice) * order.quantity < 0 ? '-' : '')}${Math.abs(Number((order.exitPrice - order.entryPrice) * order.quantity)).toFixed(2)}
                 </td>
-                <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {formatDateTime(order.submitted_at)}
-                </td>
-                <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {order.filled_at ? formatDateTime(order.filled_at) : "-"}
-                </td>
-              </tr>):("")
+              </tr>
             ))}
           </tbody>
         </table>
       </div>
-        </div>
+    </div>
     )
 }
 
-export default OptionsClosedPosition;
+export default ProfitLose

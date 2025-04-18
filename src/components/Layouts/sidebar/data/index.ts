@@ -29,6 +29,13 @@ export const NAV_DATA = [
         icon: Icons.Table,
         items: [],
       },
+
+      {
+        title: "Profit & Loss",
+        url: "/profit-loss",
+        icon: Icons.Table,
+        items: [],
+      },
       
       // {
       //   title: "Closed Position",

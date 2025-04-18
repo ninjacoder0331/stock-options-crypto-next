@@ -170,42 +170,7 @@ const StockClosedPosition = () => {
         </div>
       </div>
 
-      <div className='flex flex-col gap-4'>
-        {/* Date Range Selector */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-2 px-4  bg-gray-50 rounded-xl shadow-1 dark:bg-gray-700 dark:shadow-card">
-          <div className="flex flex-col sm:flex-row items-center gap-4 w-full">
-            <div className="flex flex-col gap-1 w-full sm:w-auto">
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Start Date</label>
-              <input 
-                type="date" 
-                value={startDate}
-                max={endDate}
-                onChange={handleStartDateChange}
-                className="rounded-lg border border-stroke bg-transparent px-3 py-2 text-sm font-medium outline-none transition-all focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white"
-              />
-            </div>
-            <div className="flex flex-col gap-1 w-full sm:w-auto">
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">End Date</label>
-              <input 
-                type="date" 
-                value={endDate}
-                min={startDate}
-                max={today}
-                onChange={handleEndDateChange}
-                className="rounded-lg border border-stroke bg-transparent px-3 py-2 text-sm font-medium outline-none transition-all focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white"
-              />
-            </div>
-          </div>
-          
-          {/* Profit/Loss Summary */}
-          <div className="flex flex-col items-center justify-center p-4 rounded-lg bg-gray-50 dark:bg-gray-800 w-full sm:w-auto">
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-1">Total&nbsp;&nbsp;P/L</h3>
-            <p className={`text-xl font-bold ${totalProfitLoss >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-              {totalProfitLoss.toFixed(0)}
-            </p>
-          </div>
-        </div>
-      </div>
+      
 
 
       <div className="overflow-x-auto p-6 rounded-xl bg-white shadow-1 dark:bg-gray-800 dark:shadow-card mt-3">
