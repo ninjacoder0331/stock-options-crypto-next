@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect } from 'react'
 import OptionsClosedPosition from "@/components/OptionsClosedPosition"
 import StockClosedPosition from "@/components/stockClosedPosition"
-import TitleLine from "@/components/TitleLine"
 
 const ClosedPositionPage = () => {
   const [selectedHistory, setSelectedHistory] = useState('options')
