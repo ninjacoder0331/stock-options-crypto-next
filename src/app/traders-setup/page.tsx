@@ -7,11 +7,6 @@ import { Suspense } from "react";
 import apiClient from "@/lib/axios";
 import MyTable from "@/components/myTable";
 
-
-// export const metadata: Metadata = {
-//   title: "traders-setup",
-// };
-
 const TradersSetup = () => {
   
 

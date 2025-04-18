@@ -5,8 +5,6 @@ import TradingStartStop from '@/components/Setting/tradingStartStop'
 import ProfitLossSetting from '@/components/Setting/profitLossSetting'
 const SettingsPage = () => {
 
-  
-
     return (
         <div>
           <div className="mb-8">
@@ -35,7 +33,6 @@ const SettingsPage = () => {
 
           </div>
          
-          
         </div>
     )
 }

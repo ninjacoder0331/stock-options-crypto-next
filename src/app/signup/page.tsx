@@ -1,8 +1,6 @@
 'use client'
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { signIn , useSession } from "next-auth/react";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { authService } from '@/services/auth.service';
