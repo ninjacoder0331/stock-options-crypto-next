@@ -15,9 +15,7 @@
 
 ## About The Project
 
-The **Alpaca Option Trading Frontend** is a user-friendly web interface designed to facilitate options trading through Alpaca’s Trading API. It enables users to explore, manage, and execute options trades including single-leg and multi-leg strategies such as calls, puts, straddles, spreads, and more. This frontend aims to simplify the complexities of options trading by providing real-time data visualization, contract filtering, and seamless order management.
-
-Built to work with Alpaca’s paper trading and live environments, this project is ideal for developers and traders who want to algorithmically or manually trade options with a modern, intuitive interface.
+The **Alpaca Option Trading Frontend** is a streamlined, intuitive web interface that enables seamless exploration, management, and execution of options trades via Alpaca’s Trading API. Supporting both single-leg and multi-leg strategies—including calls, puts, straddles, and spreads—it simplifies options trading by delivering real-time data visualization, advanced contract filtering, and efficient order handling. Designed for use with Alpaca’s paper and live trading environments, it serves developers and traders seeking a modern, robust platform for algorithmic or manual options trading.
 
 ---
 
