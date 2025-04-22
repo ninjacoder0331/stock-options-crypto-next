@@ -140,6 +140,6 @@ console.log('Order submitted:', order);
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
----
+
 
 *Options trading involves significant risk and may not be suitable for all investors. Please review the [Characteristics and Risks of Standardized Options](https://www.theocc.com/company-information/publications/character-risks-booklet) before trading.*
