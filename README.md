@@ -133,11 +133,3 @@ const orderRequest = new MarketOrderRequest({
 const order = await tradingClient.submitOrder(orderRequest);
 console.log('Order submitted:', order);
 ```
-
----
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
