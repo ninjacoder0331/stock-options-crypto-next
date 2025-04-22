@@ -136,37 +136,10 @@ console.log('Order submitted:', order);
 
 ---
 
-## Contributing
-
-Contributions are welcome! Please fork the repository and submit pull requests for bug fixes, enhancements, or new features.
-
-Steps to contribute:
-
-1. Fork the repository  
-2. Create a feature branch (`git checkout -b feature/YourFeature`)  
-3. Commit your changes (`git commit -m 'Add YourFeature'`)  
-4. Push to the branch (`git push origin feature/YourFeature`)  
-5. Open a Pull Request  
-
----
-
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
----
+
 
 *Options trading involves significant risk and may not be suitable for all investors. Please review the [Characteristics and Risks of Standardized Options](https://www.theocc.com/company-information/publications/character-risks-booklet) before trading.*
-
----
-```
-
-Citations:
-[1] https://alpaca.markets/options
-[2] https://docs.alpaca.markets/docs/options-trading
-[3] https://www.reddit.com/r/algotrading/comments/1chpqx6/thinking_of_using_alpaca_once_their_options_api/
-[4] https://wire.insiderfinance.io/alpaca-algorithmic-trading-api-in-python-part-1-getting-started-with-paper-trading-efbff8992836
-[5] https://www.youtube.com/watch?v=B0Z7oCmr5nM
-[6] https://alpaca.markets/learn/how-to-trade-options-with-alpaca
-[7] https://www.youtube.com/watch?v=4-WiLfB51AQ
-[8] https://alpaca.markets/learn/executing-a-delta-hedged-options-arbitrage-strategy-using-alpacas-trading-api
