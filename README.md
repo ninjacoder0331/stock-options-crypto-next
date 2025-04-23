@@ -1,4 +1,4 @@
-# Alpaca Option Trading Frontend
+# Alpaca stock Option Trading Frontend
 
 ## Table of Contents
 - [About The Project](#about-the-project)
@@ -136,4 +136,4 @@ console.log('Order submitted:', order);
 
 ---
 Let's connect! <br>
-<b>Github: ninjacoder0331</b>
+<b>Github: ninjacoder0331</b> <br>
