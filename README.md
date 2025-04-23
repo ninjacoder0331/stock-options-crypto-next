@@ -133,3 +133,6 @@ const orderRequest = new MarketOrderRequest({
 const order = await tradingClient.submitOrder(orderRequest);
 console.log('Order submitted:', order);
 ```
+
+---
+Let's connect!
