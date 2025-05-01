@@ -19,7 +19,7 @@ const ProfitLossPage = () => {
     }).catch((err)=>{
       setIsLoading(false)
     })
-  },[])
+  },[])                                                                                                           
 
   if(isLoading){
     return <div>Loading...</div>
@@ -33,5 +33,5 @@ const ProfitLossPage = () => {
         </div>
     )
 }
-
+    
 export default ProfitLossPage
