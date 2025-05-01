@@ -40,7 +40,6 @@ const TraderDashboard = () => {
             </div>
           ))}
       </div>
-
       
       <div className="rounded-lg bg-white p-6 shadow-1 dark:bg-gray-800" key={2}>
         <OpenPosition/>

@@ -6,7 +6,6 @@ import TitleLine from '@/components/TitleLine';
 import apiClient from '@/lib/axios';
 import { useState , useEffect } from 'react';
 
-
 const OpenPositionPage = () => {
 
   const [openPositions, setOpenPositions] = useState([]);

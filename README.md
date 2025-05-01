@@ -1,65 +1,145 @@
-# Startup - Next.js Demo
+# Alpaca Option Trading Frontend
 
-Startup free, open-source, and premium-quality startup website template for Next.js comes with everything you need to launch a startup, business, or SaaS website, including all essential sections, components, and pages.
+## Table of Contents
+- [About The Project](#about-the-project)
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Options Trading with Alpaca](#options-trading-with-alpaca)
+- [API Integration](#api-integration)
+- [Contributing](#contributing)
+- [License](#license)
 
-If you're looking for a high-quality and visually appealing, feature-rich Next.js Template for your next startup, SaaS, or business website, this is the perfect choice and starting point for you!
+---
 
-### ✨ Key Features
-- Crafted for Startup and SaaS Business
-- Next.js and Tailwind CSS
-- All Essential Business Sections and Pages
-- High-quality and Clean Design
-- Dark and Light Version
-- TypeScript Support
-and Much More ...
+## About The Project
 
-### 🙌 Detailed comparison between the Free and Pro versions of Startup
+The **Alpaca Option Trading Frontend** is a sophisticated, user-centric web interface that streamlines the exploration, management, and execution of options trading through Alpaca’s Trading API. Supporting both single-leg and advanced multi-leg strategies—including calls, puts, straddles, spreads, iron butterflies, and iron condors—it delivers real-time data visualization, comprehensive contract filtering, and efficient order management. Engineered for Alpaca’s paper and live trading environments, it empowers developers and traders with a robust platform for both algorithmic and manual options trading.
 
-| Feature             | Free | Pro |
-|---------------------|------------|----------|
-| Next.js Landing Page             | ✅ Yes      | ✅ Yes      |
-| All The Integrations - Auth, DB, Payments, Blog and many more ...             | ❌ No      | ✅ Yes |
-| Homepage Variations             | 1      | 2 |
-| Additional SaaS Pages and Components             | ❌ No      | ✅ Yes |
-| Functional Blog with Sanity       | ❌ No      | ✅ Yes | ✅ Yes |
-| Use with Commercial Projects            | ✅ Yes      | ✅ Yes      |
-| Lifetime Free Updates             | ✅ Yes      | ✅ Yes |
-| Email Support       | ❌ No         | ✅ Yes       |
-| Community Support         | ✅ Yes         | ✅ Yes       |
+---
+
+## Features
+
+- Secure and reliable connection to Alpaca’s Trading API for comprehensive options trading.
+- Advanced filtering of options contracts by symbol, expiration date, strike price, and option type.
+- Execution of single-leg orders (calls and puts) and complex multi-leg strategies such as straddles, spreads, and iron condors.
+- Real-time synchronization of orders, positions, and account metrics.
+- Full lifecycle management of options positions including opening, closing, and monitoring.
+- Support for paper trading to facilitate risk-free strategy development and testing.
+- Responsive, intuitive user interface optimized for seamless user experience.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher recommended)
+- npm or yarn package manager
+- Alpaca account with API key and secret (paper trading or live)
+- Fundamental understanding of options trading concepts
+
+### Package Installation
+
+Install the Alpaca Trading API client in your project directory using:
+
+```
+npm install --save @alpacahq/alpaca-trade-api
+```
+
+or with yarn:
+
+```
+yarn add @alpacahq/alpaca-trade-api
+```
+
+---
+
+## Installation
+
+Clone the repository and install dependencies:
+
+```
+git clone https://github.com/yourusername/alpaca-option-trading-frontend.git
+cd alpaca-option-trading-frontend
+npm install
+```
+
+---
+
+## Usage
+
+Create a `.env` file in the root directory with your Alpaca API credentials:
+
+```
+REACT_APP_ALPACA_API_KEY=your_api_key
+REACT_APP_ALPACA_SECRET_KEY=your_secret_key
+REACT_APP_ALPACA_PAPER=true
+```
+
+Start the development server:
+
+```
+npm start
+```
+
+Access the frontend at `http://localhost:3000`.
+
+---
+
+## Options Trading with Alpaca
+
+This frontend leverages Alpaca’s comprehensive Options Trading API capabilities, including:
+
+- Retrieving option contracts by symbol or contract ID.
+- Filtering contracts by expiration, strike price, and option type.
+- Accessing account details such as options trading level and buying power.
+- Placing market and limit orders for options contracts.
+- Executing multi-leg strategies (straddles, strangles, iron butterflies, iron condors, credit/debit/calendar spreads).
+- Real-time monitoring of order status and positions.
+
+For detailed API documentation and examples, visit:
+
+- [Alpaca Options API Docs](https://alpaca.markets/docs/api-references/options-api/)
+- [Alpaca-py SDK GitHub](https://github.com/alpacahq/alpaca-py)
+- [Paper Trading Options Tutorial Video](https://www.youtube.com/watch?v=B0Z7oCmr5nM)
+
+---
+
+## API Integration
+
+The frontend integrates Alpaca’s REST and streaming APIs to:
+
+- Authenticate and manage user accounts securely.
+- Query real-time stock and options market data.
+- Submit and manage orders via `MarketOrderRequest`, `LimitOrderRequest`, and multi-leg order requests.
+- Subscribe to WebSocket streams for live trade and order updates.
+
+Example: Submitting a market order using Node.js backend
+
+```
+const { TradingClient, MarketOrderRequest, OrderSide, TimeInForce } = require('@alpaca/trading');
+
+const tradingClient = new TradingClient('your_api_key', 'your_secret_key', { paper: true });
+
+const orderRequest = new MarketOrderRequest({
+  symbol: 'AAPL',
+  qty: 1,
+  side: OrderSide.BUY,
+  time_in_force: TimeInForce.DAY,
+});
+
+const order = await tradingClient.submitOrder(orderRequest);
+console.log('Order submitted:', order);
+```
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 
-### [🔥 Get Startup Pro](https://nextjstemplates.com/templates/saas-starter-startup)
 
-[![Startup Pro](https://raw.githubusercontent.com/NextJSTemplates/startup-nextjs/main/startup-pro.webp)](https://nextjstemplates.com/templates/saas-starter-startup)
-
-Startup Pro - Expertly crafted for fully-functional, high-performing SaaS startup websites. Comes with with Authentication, Database, Blog, and all the essential integrations necessary for SaaS business sites.
-
-
-### [🚀 View Free Demo](https://startup.nextjstemplates.com/)
-
-### [🚀 View Pro Demo](https://startup-pro.nextjstemplates.com/)
-
-### [📦 Download](https://nextjstemplates.com/templates/startup)
-
-### [🔥 Get Pro](https://nextjstemplates.com/templates/saas-starter-startup)
-
-### [🔌 Documentation](https://nextjstemplates.com/docs)
-
-### ⚡ Deploy Now
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FNextJSTemplates%2Fstartup-nextjs)
-
-[![Deploy with Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/NextJSTemplates/startup-nextjs)
-
-
-### 📄 License
-Startup is 100% free and open-source, feel free to use with your personal and commercial projects.
-
-### 💜 Support
-If you like the template, please star this repository to inspire the team to create more stuff like this and reach more users like you!
-
-### ✨ Explore and Download - Free [Next.js Templates](https://nextjstemplates.com)
-
-### Update Log
-**29 Jan 2025**
-- Upgraded to Next.js 15
+*Options trading involves significant risk and may not be suitable for all investors. Please review the [Characteristics and Risks of Standardized Options](https://www.theocc.com/company-information/publications/character-risks-booklet) before trading.*
